@@ -11,8 +11,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/style.css"/>
+<script>document.documentElement.classList.add('fx');</script>
 </head>
 <body>
+<div id="scroll-progress" aria-hidden="true"></div>
 <nav>
   <div class="container">
     <div class="brand"><span class="dot"></span> SafeStay&nbsp;Hospital&nbsp;Check</div>
@@ -22,24 +24,29 @@
       <a href="#why">Why it matters</a>
       <a href="#protect">Protect yourself</a>
       <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
       <a href="#about">About</a>
     </div>
   </div>
 </nav>
 
 <header class="hero">
-  <div class="container">
-    <div class="eyebrow" style="color:var(--accent)">Free · Plain-language · Official Medicare data</div>
-    <h1>Choosing a hospital? See which ones send the fewest patients back.</h1>
-    <p class="lead">When you leave the hospital, you want to stay home and get better, not end up back in a bed within a month. Some hospitals readmit far more patients than others. This free tool helps you and your family <strong>compare <span id="h-nhosp">2,800+</span> U.S. hospitals</strong> on avoidable readmissions, overall and for your specific condition, using official Medicare data.</p>
-    <div class="tagchips">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="container hero-inner">
+    <div class="eyebrow" data-depth="0.5" style="color:var(--accent)">Free · Plain-language · Official Medicare data</div>
+    <h1 data-depth="1.1">Choosing a hospital? See which ones send the fewest patients back.</h1>
+    <p class="lead" data-depth="0.8">When you leave the hospital, you want to stay home and get better, not end up back in a bed within a month. Some hospitals readmit far more patients than others. This free tool helps you and your family <strong>compare <span id="h-nhosp">2,800+</span> U.S. hospitals</strong> on avoidable readmissions, overall and for your specific condition, using official Medicare data.</p>
+    <div class="tagchips" data-depth="0.6">
       <span class="chip">No sign-up</span>
       <span class="chip">Official CMS / Medicare data</span>
       <span class="chip">By medical condition</span>
       <span class="chip">Your data never leaves your device</span>
     </div>
-    <a class="cta" href="#find">Find &amp; compare hospitals</a>
-    <a class="cta ghost" href="#why">What is a readmission?</a>
+    <div data-depth="0.4" style="display:inline-block">
+      <a class="cta" href="#find">Find &amp; compare hospitals</a>
+      <a class="cta ghost" href="#why">What is a readmission?</a>
+    </div>
+    <div class="scroll-cue" aria-hidden="true"><span></span>scroll to explore</div>
   </div>
 </header>
 
@@ -74,7 +81,7 @@
     <p class="lead">A "30-day readmission" is when a patient is admitted again within a month of going home. It usually means something went wrong with recovery, and where you're treated changes how likely that is.</p>
     <div class="grid cols-3" style="margin-top:32px">
       <div class="card"><div class="statbig">~1 in 7</div><p>Medicare patients is readmitted within 30 days of leaving the hospital, about <strong>3.8 million</strong> readmissions a year in the U.S.</p></div>
-      <div class="card"><div class="statbig">~$15,200</div><p>is the average cost of a single readmission, a burden on patients, families, and taxpayers, on top of the health risk of another hospital stay.</p></div>
+      <div class="card"><div class="statbig"><span data-count="15200" data-pre="$">$15,200</span></div><p>is the average cost of a single readmission, a burden on patients, families, and taxpayers, on top of the health risk of another hospital stay.</p></div>
       <div class="card"><div class="statbig">Hospitals<small> differ a lot</small></div><p>Two hospitals treating similar patients can have very different readmission rates. Medicare even reduces payments to hospitals with too many, because many are avoidable.</p></div>
     </div>
     <p class="note" style="margin-top:24px">You have the right to choose where you get care (except in a true emergency). Comparing hospitals ahead of a planned surgery or for an ongoing condition like heart failure can help you pick a place that's more likely to get you home, and keep you there.</p>
@@ -142,12 +149,13 @@
       <div class="card"><div class="statbig" id="r-n">2,833</div><p class="muted">U.S. hospitals analyzed, using five official CMS Care Compare datasets from the latest (2026) refresh.</p></div>
       <div class="card"><div class="statbig" id="r-star">…</div><p class="muted">Accuracy using the CMS star rating alone. The research model does better by adding independent clinical-quality signals.</p></div>
     </div>
-    <div class="grid cols-2" style="margin-top:26px">
+    <div class="grid cols-3" style="margin-top:26px">
       <figure class="card figcard"><img src="assets/figures/feature_importance.png" alt="What predicts readmissions" loading="lazy"/><figcaption><strong>What predicts more readmissions.</strong> Beyond the star rating, hospital-wide mortality, infections, and patient experience matter most.</figcaption></figure>
-      <figure class="card figcard"><img src="assets/figures/per_condition_auc.png" alt="Accuracy by condition" loading="lazy"/><figcaption><strong>By condition.</strong> The tool models risk separately for each major condition; higher-volume conditions are predicted most reliably.</figcaption></figure>
+      <figure class="card figcard"><img src="assets/figures/per_condition_auc.png" alt="Accuracy by condition" loading="lazy"/><figcaption><strong>By condition.</strong> Risk is modeled separately for each major condition; higher-volume conditions are predicted most reliably.</figcaption></figure>
+      <figure class="card figcard"><img src="assets/figures/learning_curve.png" alt="Learning curve" loading="lazy"/><figcaption><strong>Checked for overfitting.</strong> Training and validation accuracy stay close together (small gap), so the model generalizes rather than memorizing.</figcaption></figure>
     </div>
     <div class="grid cols-2" style="margin-top:22px">
-      <div class="card"><h3><span class="icon">✓</span>Honest &amp; transparent</h3><p>The model is interpretable, every prediction can be traced to specific quality measures, and it's "leakage-free": it never uses information that would let it cheat. It's research software for comparing hospitals, <strong>not a medical device</strong>.</p></div>
+      <div class="card"><h3><span class="icon">✓</span>Honest &amp; transparent</h3><p>The model is interpretable, every prediction can be traced to specific quality measures, and it's "leakage-free": it never uses information that would let it cheat. We tested it for overfitting and chose a model whose training and validation accuracy stay close. It's research software for comparing hospitals, <strong>not a medical device</strong>.</p></div>
       <div class="card"><h3><span class="icon">✓</span>Public &amp; reproducible</h3><p>It uses only public CMS data, no private patient records, so any researcher, journalist, or regulator can reproduce it. Methods and code are documented in a companion research repository.</p></div>
     </div>
   </div>
@@ -173,6 +181,22 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="eyebrow">Common questions</div>
+    <h2>Questions patients and families ask.</h2>
+    <div class="grid cols-2" style="margin-top:26px;align-items:start">
+      <details class="faq card"><summary><strong>What does "readmission ratio" mean?</strong></summary><p>It is the hospital's official Medicare Excess Readmission Ratio: how its 30-day readmissions compare with what is expected for hospitals treating similar patients. 1.0 is average. Below 1.0 means fewer readmissions than expected (better); above 1.0 means more (worse).</p></details>
+      <details class="faq card"><summary><strong>Is this medical advice?</strong></summary><p>No. This is general information to help you compare hospitals. It describes a hospital's average performance, not what will happen to you. Always talk to your own doctor about your care and where to receive it.</p></details>
+      <details class="faq card"><summary><strong>Where does the data come from?</strong></summary><p>From the U.S. government's official CMS Care Compare program (Medicare), refreshed in 2026. The same public data hospitals are measured on. We add plain language and condition-level comparison.</p></details>
+      <details class="faq card"><summary><strong>Why does a hospital show different ratings by condition?</strong></summary><p>Hospitals vary by service line. A hospital can be excellent at hip and knee recovery yet struggle with heart-failure transitions. Click "by condition" on any result to see the full breakdown.</p></details>
+      <details class="faq card"><summary><strong>My hospital is not listed. Why?</strong></summary><p>Only hospitals that report enough Medicare readmission cases for at least one tracked condition appear here. Very small hospitals and some specialty facilities may not have reportable data.</p></details>
+      <details class="faq card"><summary><strong>What is the "AI risk score"?</strong></summary><p>A research model's estimate of how likely a hospital is to readmit more patients than expected, based on its broader quality profile. It is a secondary signal; the headline rating uses the hospital's real reported Medicare ratio.</p></details>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="container">
     <div class="disclaimer" style="margin-bottom:22px">
@@ -194,6 +218,21 @@
   </div>
 </footer>
 
+<div id="compare-bar" class="compare-bar" hidden>
+  <span id="compare-count">0 hospitals selected</span>
+  <button id="compare-view" disabled>View comparison</button>
+  <button id="compare-clear" class="ghostbtn">Clear</button>
+</div>
+<div id="compare-modal" class="modal" hidden>
+  <div class="modal-card">
+    <button id="compare-close" class="modal-close" aria-label="Close">×</button>
+    <h2 style="font-size:1.4rem">Compare hospitals, side by side</h2>
+    <div id="compare-content"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <script src="js/app.js"></script>
+<script src="js/fx.js" defer></script>
 </body>
 </html>

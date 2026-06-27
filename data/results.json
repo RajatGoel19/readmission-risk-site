@@ -3,215 +3,221 @@
   "n_hospitals": 2833,
   "overall_model": {
     "best_model": "LogisticRegression",
-    "cv_roc_auc": 0.7447467019991075,
-    "holdout_roc_auc": 0.7870931805522399,
-    "holdout_accuracy": 0.7080394922425952,
-    "holdout_pr_auc": 0.7918703943586372,
-    "holdout_brier": 0.18779890637748303,
-    "holdout_f1": 0.7004341534008683,
+    "cv_roc_auc": 0.7569847380234892,
+    "holdout_roc_auc": 0.7931009787538792,
+    "holdout_accuracy": 0.6953455571227081,
+    "holdout_pr_auc": 0.7926049392297386,
+    "holdout_brier": 0.18533283177881216,
+    "holdout_f1": 0.6878612716763006,
     "n_test": 709,
     "prevalence": 0.5008824567596187
   },
   "cv_table": [
     {
       "Model": "LogisticRegression",
-      "ROC_AUC_Mean": 0.7447,
-      "ROC_AUC_SD": 0.0165,
-      "Accuracy_Mean": 0.669
-    },
-    {
-      "Model": "EBM",
-      "ROC_AUC_Mean": 0.7336,
-      "ROC_AUC_SD": 0.0159,
-      "Accuracy_Mean": 0.6662
-    },
-    {
-      "Model": "RandomForest",
-      "ROC_AUC_Mean": 0.7287,
-      "ROC_AUC_SD": 0.0174,
-      "Accuracy_Mean": 0.6587
+      "ROC_AUC_Mean": 0.757,
+      "ROC_AUC_SD": 0.0152,
+      "Accuracy_Mean": 0.6822
     },
     {
       "Model": "XGBoost",
-      "ROC_AUC_Mean": 0.7235,
-      "ROC_AUC_SD": 0.0143,
-      "Accuracy_Mean": 0.6549
+      "ROC_AUC_Mean": 0.7478,
+      "ROC_AUC_SD": 0.0182,
+      "Accuracy_Mean": 0.6667
+    },
+    {
+      "Model": "EBM",
+      "ROC_AUC_Mean": 0.743,
+      "ROC_AUC_SD": 0.0135,
+      "Accuracy_Mean": 0.6822
     },
     {
       "Model": "HistGradBoost",
-      "ROC_AUC_Mean": 0.7136,
-      "ROC_AUC_SD": 0.0165,
-      "Accuracy_Mean": 0.6511
+      "ROC_AUC_Mean": 0.7342,
+      "ROC_AUC_SD": 0.0183,
+      "Accuracy_Mean": 0.6629
+    },
+    {
+      "Model": "RandomForest",
+      "ROC_AUC_Mean": 0.7133,
+      "ROC_AUC_SD": 0.0258,
+      "Accuracy_Mean": 0.6507
     }
   ],
-  "disease_pooled_auc": 0.687,
+  "disease_pooled_auc": 0.692,
   "per_condition": [
     {
       "condition": "AMI",
       "n_test": 432,
       "prevalence": 0.532,
-      "roc_auc": 0.632
+      "roc_auc": 0.653
     },
     {
       "condition": "HF",
       "n_test": 662,
       "prevalence": 0.489,
-      "roc_auc": 0.701
+      "roc_auc": 0.71
     },
     {
       "condition": "PN",
       "n_test": 682,
       "prevalence": 0.482,
-      "roc_auc": 0.71
+      "roc_auc": 0.707
     },
     {
       "condition": "COPD",
       "n_test": 583,
       "prevalence": 0.496,
-      "roc_auc": 0.697
+      "roc_auc": 0.694
     },
     {
       "condition": "CABG",
       "n_test": 230,
       "prevalence": 0.509,
-      "roc_auc": 0.628
+      "roc_auc": 0.645
     },
     {
       "condition": "HIP_KNEE",
       "n_test": 367,
       "prevalence": 0.458,
-      "roc_auc": 0.695
+      "roc_auc": 0.699
     }
   ],
   "top_risk_factors": [
     {
       "Feature": "CMS star rating = 5.0",
-      "Importance": 0.3231374415416778
-    },
-    {
-      "Feature": "CMS star rating = 2.0",
-      "Importance": 0.28900322594178907
+      "Importance": 0.32215943458642404
     },
     {
       "Feature": "CMS star rating = 4.0",
-      "Importance": 0.2853318643173356
+      "Importance": 0.2855257182055041
+    },
+    {
+      "Feature": "CMS star rating = 2.0",
+      "Importance": 0.28170499468980564
     },
     {
       "Feature": "CMS star rating = 1.0",
-      "Importance": 0.24843751288782462
+      "Importance": 0.2427917516744019
     },
     {
       "Feature": "30-day mortality: heart failure",
-      "Importance": 0.2461075591472769
+      "Importance": 0.23094736261215443
     },
     {
       "Feature": "volume (missing flag)",
-      "Importance": 0.17295120947732953
+      "Importance": 0.16029246169079936
     },
     {
       "Feature": "Infection: C. difficile",
-      "Importance": 0.15730130019775682
+      "Importance": 0.12127224140458731
     },
     {
       "Feature": "30-day mortality: stroke",
-      "Importance": 0.14060928542095533
+      "Importance": 0.11339859975131042
+    },
+    {
+      "Feature": "Community: child poverty rate",
+      "Importance": 0.10689498245667338
+    },
+    {
+      "Feature": "Left ED without being seen",
+      "Importance": 0.10364827367121257
     },
     {
       "Feature": "30-day mortality: COPD",
-      "Importance": 0.10018819977206662
+      "Importance": 0.10000354619216438
     },
     {
-      "Feature": "Ownership: Proprietary",
-      "Importance": 0.08811135254519888
+      "Feature": "Sepsis bundle compliance",
+      "Importance": 0.08746710547839176
     },
     {
-      "Feature": "Patient exp: overall rating",
-      "Importance": 0.08317818217345807
-    },
-    {
-      "Feature": "Infection: MRSA",
-      "Importance": 0.08017091744072412
-    },
-    {
-      "Feature": "mrsa (missing flag)",
-      "Importance": 0.07998310082867205
+      "Feature": "Community: % rural",
+      "Importance": 0.08572823075037886
     },
     {
       "Feature": "Patient exp: nurse communication",
-      "Importance": 0.06376580969424506
+      "Importance": 0.08282787535645492
     },
     {
-      "Feature": "clabsi (missing flag)",
-      "Importance": 0.05916445061970017
+      "Feature": "mrsa (missing flag)",
+      "Importance": 0.07404836478326622
     }
   ],
   "has_xgboost": true,
   "has_ebm": true,
   "robust_cv": {
     "best_model": "LogisticRegression",
-    "roc_auc_mean": 0.7622,
+    "roc_auc_mean": 0.7734,
     "ci95": [
-      0.7541,
-      0.7704
+      0.7639,
+      0.783
     ],
     "table": [
       {
         "Model": "LogisticRegression",
-        "ROC_AUC_Mean": 0.7622,
-        "CI95_low": 0.7541,
-        "CI95_high": 0.7704,
-        "SD": 0.0161
+        "ROC_AUC_Mean": 0.7734,
+        "CI95_low": 0.7639,
+        "CI95_high": 0.783,
+        "SD": 0.0189,
+        "overfit_gap": 0.0288
       },
       {
         "Model": "Ensemble(LR+HGB+EBM)",
-        "ROC_AUC_Mean": 0.7621,
-        "CI95_low": 0.7546,
-        "CI95_high": 0.7696,
-        "SD": 0.0148
-      },
-      {
-        "Model": "EBM",
-        "ROC_AUC_Mean": 0.7498,
-        "CI95_low": 0.7414,
-        "CI95_high": 0.7583,
-        "SD": 0.0167
+        "ROC_AUC_Mean": 0.7726,
+        "CI95_low": 0.7629,
+        "CI95_high": 0.7824,
+        "SD": 0.0193,
+        "overfit_gap": 0.0635
       },
       {
         "Model": "XGBoost",
-        "ROC_AUC_Mean": 0.7467,
-        "CI95_low": 0.7374,
-        "CI95_high": 0.7561,
-        "SD": 0.0185
+        "ROC_AUC_Mean": 0.7601,
+        "CI95_low": 0.7499,
+        "CI95_high": 0.7704,
+        "SD": 0.0203,
+        "overfit_gap": 0.1041
       },
       {
-        "Model": "RandomForest",
-        "ROC_AUC_Mean": 0.7388,
-        "CI95_low": 0.7296,
-        "CI95_high": 0.748,
-        "SD": 0.0181
+        "Model": "EBM",
+        "ROC_AUC_Mean": 0.758,
+        "CI95_low": 0.747,
+        "CI95_high": 0.769,
+        "SD": 0.0217,
+        "overfit_gap": 0.0827
       },
       {
         "Model": "HistGradBoost",
-        "ROC_AUC_Mean": 0.7376,
-        "CI95_low": 0.7291,
-        "CI95_high": 0.7461,
-        "SD": 0.0168
+        "ROC_AUC_Mean": 0.7523,
+        "CI95_low": 0.7406,
+        "CI95_high": 0.764,
+        "SD": 0.0232,
+        "overfit_gap": 0.0852
+      },
+      {
+        "Model": "RandomForest",
+        "ROC_AUC_Mean": 0.7265,
+        "CI95_low": 0.7161,
+        "CI95_high": 0.7368,
+        "SD": 0.0204,
+        "overfit_gap": 0.09
       }
     ],
-    "calibrated_lr_auc": 0.7612
+    "calibrated_lr_auc": 0.7718
   },
   "ablation_star": [
     {
       "Model": "LogisticRegression",
-      "AUC_with_star": 0.7622,
-      "AUC_without_star": 0.6799,
-      "AUC_drop": 0.0823
+      "AUC_with_star": 0.7734,
+      "AUC_without_star": 0.6969,
+      "AUC_drop": 0.0765
     },
     {
       "Model": "EBM",
-      "AUC_with_star": 0.7498,
-      "AUC_without_star": 0.6677,
-      "AUC_drop": 0.0821
+      "AUC_with_star": 0.758,
+      "AUC_without_star": 0.682,
+      "AUC_drop": 0.076
     }
   ],
   "star_only_auc": 0.6967

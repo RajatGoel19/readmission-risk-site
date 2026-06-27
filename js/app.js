@@ -44,8 +44,12 @@
     .then(([res, model, facilities]) => {
       if (res) renderEvidence(res);
       if (model) buildCalculator(model);
-      if (facilities) { FAC = facilities; wireLookup(); }
+      if (facilities) { facilities.forEach((f, i) => (f._id = i)); FAC = facilities; wireLookup(); wireCompare(); }
     });
+
+  // ---- compare state ----
+  const cmp = new Map();
+  const CMP_NAMES = { OVERALL: "Overall", HF: "Heart failure", PN: "Pneumonia", COPD: "COPD / lung", AMI: "Heart attack", CABG: "Bypass surgery", HIP_KNEE: "Hip / knee replacement" };
 
   /* ---------- evidence / how-it-works numbers ---------- */
   function renderEvidence(res) {
@@ -124,15 +128,41 @@
           ? (selectedCond === "ALL" ? "" : `not reported for ${condLabel.toLowerCase()}`)
           : `readmission ratio ${r.toFixed(2)}${r > 1 ? " (above 1.0)" : ""}`;
         const ai = f.risk_prob != null ? `<div class="aiscore">AI risk score ${Math.round(f.risk_prob * 100)}%</div>` : "";
-        return `<div class="row">
-          <div><strong>${f.name}</strong>
-            <div class="hosp-meta">${f.state} · ${f.type || ""} · ${star}</div>
-            <div class="hosp-meta">${ratioTxt}</div>
-          </div>
-          <div style="text-align:right"><span class="badge ${cls}">${lbl}</span>${ai}</div>
-        </div>`;
+        return `<details class="hosp">
+          <summary>
+            <div><strong>${f.name}</strong>
+              <div class="hosp-meta">${f.state} · ${f.type || ""} · ${star}</div>
+              <div class="hosp-meta">${ratioTxt}</div>
+            </div>
+            <div style="text-align:right"><span class="badge ${cls}">${lbl}</span>${ai}
+              <button type="button" class="cmp-btn${cmp.has(f._id) ? " on" : ""}" data-k="${f._id}">${cmp.has(f._id) ? "✓ Comparing" : "+ Compare"}</button>
+              <div class="expand-hint">by condition ▾</div></div>
+          </summary>
+          <div class="cond-grid">${condBreakdown(f)}</div>
+        </details>`;
       })
       .join("");
+  }
+
+  // Per-condition mini-breakdown shown when a hospital row is expanded
+  function condBreakdown(f) {
+    const NAMES = { HF: "Heart failure", PN: "Pneumonia", COPD: "COPD / lung", AMI: "Heart attack", CABG: "Bypass surgery", HIP_KNEE: "Hip / knee replacement" };
+    const rows = Object.keys(NAMES).map((k) => {
+      const v = f.cond && f.cond[k] != null ? f.cond[k] : null;
+      const [cls, lbl] = ratingBand(v);
+      const val = v == null ? "not reported" : `ratio ${v.toFixed(2)}`;
+      return `<div class="cond-item"><span class="cond-name">${NAMES[k]}</span>
+        <span class="cond-right"><span class="cond-val">${val}</span><span class="badge ${cls}">${lbl}</span></span></div>`;
+    }).join("");
+    let ctx = "";
+    if (f.ctx && (f.ctx.income != null || f.ctx.uninsured != null)) {
+      const bits = [];
+      if (f.ctx.income != null) bits.push(`median income $${f.ctx.income.toLocaleString()}`);
+      if (f.ctx.uninsured != null) bits.push(`${f.ctx.uninsured}% uninsured`);
+      if (f.ctx.rural != null) bits.push(`${f.ctx.rural}% rural`);
+      ctx = `<div class="cond-ctx">Community it serves: ${bits.join(" · ")}</div>`;
+    }
+    return rows + ctx;
   }
 
   /* ---------- educational "what makes a hospital safer" calculator ---------- */
@@ -184,6 +214,68 @@
       renderGauge(1 / (1 + Math.exp(-z)));
     }
     compute();
+  }
+
+  /* ---------- compare hospitals ---------- */
+  function wireCompare() {
+    // toggle a hospital in/out of the compare set (without expanding the row)
+    $("#lookup-results").addEventListener("click", (e) => {
+      const btn = e.target.closest(".cmp-btn");
+      if (!btn) return;
+      e.preventDefault(); e.stopPropagation();
+      const id = +btn.dataset.k;
+      if (cmp.has(id)) cmp.delete(id);
+      else {
+        if (cmp.size >= 4) { flash("You can compare up to 4 hospitals."); return; }
+        cmp.set(id, FAC[id]);
+      }
+      btn.classList.toggle("on", cmp.has(id));
+      btn.textContent = cmp.has(id) ? "✓ Comparing" : "+ Compare";
+      updateBar();
+    });
+    $("#compare-view").addEventListener("click", showCompare);
+    $("#compare-clear").addEventListener("click", () => {
+      cmp.clear();
+      document.querySelectorAll(".cmp-btn.on").forEach((b) => { b.classList.remove("on"); b.textContent = "+ Compare"; });
+      updateBar();
+    });
+    $("#compare-close").addEventListener("click", () => ($("#compare-modal").hidden = true));
+    $("#compare-modal").addEventListener("click", (e) => { if (e.target.id === "compare-modal") e.target.hidden = true; });
+  }
+
+  function updateBar() {
+    const bar = $("#compare-bar");
+    if (!bar) return;
+    bar.hidden = cmp.size === 0;
+    $("#compare-count").textContent = `${cmp.size} hospital${cmp.size === 1 ? "" : "s"} selected`;
+    $("#compare-view").disabled = cmp.size < 2;
+  }
+
+  function showCompare() {
+    if (cmp.size < 2) return;
+    const hs = [...cmp.values()];
+    const rowFor = (key) => {
+      const cells = hs.map((f) => {
+        const v = key === "OVERALL" ? f.mean_err : (f.cond && f.cond[key] != null ? f.cond[key] : null);
+        const [cls, lbl] = ratingBand(v);
+        const val = v == null ? "" : `<div class="cond-val">ratio ${v.toFixed(2)}</div>`;
+        return `<td><span class="badge ${cls}">${lbl}</span>${val}</td>`;
+      }).join("");
+      return `<tr><th>${CMP_NAMES[key]}</th>${cells}</tr>`;
+    };
+    const head = hs.map((f) => `<th>${f.name}<div class="hosp-meta">${f.state} · ${f.star && f.star !== "NA" ? "★" + f.star : "no star"}</div></th>`).join("");
+    const body = ["OVERALL", "HF", "PN", "COPD", "AMI", "CABG", "HIP_KNEE"].map(rowFor).join("");
+    $("#compare-content").innerHTML = `<table class="cmp-table"><thead><tr><th>Readmissions</th>${head}</tr></thead><tbody>${body}</tbody></table>
+      <p class="muted" style="font-size:.8rem;margin-top:12px">Lower is better. "Ratio" is the official Medicare Excess Readmission Ratio; below 1.0 means fewer readmissions than expected. Blank cells were not reported.</p>`;
+    $("#compare-modal").hidden = false;
+  }
+
+  let flashT;
+  function flash(msg) {
+    let el = $("#flash");
+    if (!el) { el = document.createElement("div"); el.id = "flash"; document.body.appendChild(el); }
+    el.textContent = msg; el.classList.add("show");
+    clearTimeout(flashT); flashT = setTimeout(() => el.classList.remove("show"), 2200);
   }
 
   function renderGauge(p) {
