@@ -171,8 +171,51 @@ details.faq p{margin:12px 0 0;color:var(--muted);font-size:.94rem}
 .hero{min-height:88vh;display:flex;align-items:center}
 #hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:0;transition:opacity 1.4s ease}
 #hero-canvas.on{opacity:1}
-.hero-inner{position:relative;z-index:2}
 .hero [data-depth]{will-change:transform}
+/* Premium hero layout */
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:48px;align-items:center;width:100%}
+.hero-copy{max-width:620px}
+.pill-badge{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#dbeafe;padding:7px 15px;border-radius:999px;font-size:.8rem;font-weight:600;letter-spacing:.02em;margin-bottom:22px;backdrop-filter:blur(6px)}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(45,212,191,.6);animation:livepulse 2s infinite}
+@keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(45,212,191,.55)}70%{box-shadow:0 0 0 9px rgba(45,212,191,0)}100%{box-shadow:0 0 0 0 rgba(45,212,191,0)}}
+.hero h1{color:#fff;font-size:clamp(2.1rem,4.4vw,3.5rem);line-height:1.07;letter-spacing:-.02em;margin-bottom:.5em}
+.hero h1 .grad{background:linear-gradient(100deg,#7af0e0,#2dd4bf 55%,#8fd0ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.hero .lead{color:#c2d6ee;max-width:50ch;font-size:1.1rem}
+.hero-cta{margin:28px 0 6px;display:flex;flex-wrap:wrap;gap:12px}
+.hero-cta .cta{margin:0}
+.hero-trust{display:flex;gap:26px;margin-top:30px;flex-wrap:wrap}
+.hero-trust div{display:flex;flex-direction:column;line-height:1.1}
+.hero-trust b{font-size:1.7rem;font-weight:800;color:#fff}
+.hero-trust span{font-size:.74rem;color:#90aacb;text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+/* Floating preview card */
+.hero-visual{position:relative;perspective:1200px;min-height:280px}
+.float-card{background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.6);border-radius:20px;padding:22px 22px 18px;box-shadow:0 30px 70px rgba(4,16,36,.45);transform:rotate3d(1,1,0,0deg) rotate(-2.5deg);animation:floaty 6.5s ease-in-out infinite;position:relative;z-index:2}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-2.5deg)}50%{transform:translateY(-14px) rotate(-1.2deg)}}
+.fc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.fc-name{font-weight:800;color:var(--navy);font-size:1.05rem;line-height:1.2}
+.fc-loc{font-size:.82rem;color:var(--muted);margin-top:3px}
+.fc-conds{padding:14px 0 6px;display:flex;flex-direction:column;gap:11px}
+.fc-cond{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fc-cond .lbl{font-size:.88rem;color:#33425a;font-weight:600;min-width:96px}
+.fc-bar{flex:1;height:8px;border-radius:6px;background:#eef2f7;position:relative;overflow:hidden}
+.fc-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;display:block}
+.fc-bar i.better{background:linear-gradient(90deg,#34d399,#10b981)}
+.fc-bar i.avg{background:linear-gradient(90deg,#9bb0c6,#7d93a8)}
+.fc-bar i.worse{background:linear-gradient(90deg,#f87171,#dc2626)}
+.fc-ratio{font-size:.78rem;color:var(--muted);width:34px;text-align:right}
+.fc-foot{display:flex;align-items:center;gap:7px;margin-top:12px;font-size:.76rem;color:var(--teal-d);font-weight:600}
+.float-pill{position:absolute;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#eaf2fb;padding:8px 14px;border-radius:999px;font-size:.78rem;font-weight:600;backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(4,16,36,.3);z-index:3;white-space:nowrap}
+.float-pill.fp1{top:-12px;right:14px;animation:floaty 7.5s ease-in-out infinite}
+.float-pill.fp2{bottom:6px;left:-18px;animation:floaty 8.5s ease-in-out .4s infinite}
+/* Aurora depth glow behind hero content */
+.aurora{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;mix-blend-mode:screen}
+.aurora span:nth-child(1){width:46vw;height:46vw;left:-8vw;top:-10vw;background:radial-gradient(circle,rgba(45,212,191,.5),transparent 65%);animation:drift1 17s ease-in-out infinite}
+.aurora span:nth-child(2){width:40vw;height:40vw;right:-6vw;top:8vw;background:radial-gradient(circle,rgba(56,132,255,.45),transparent 65%);animation:drift2 21s ease-in-out infinite}
+.aurora span:nth-child(3){width:34vw;height:34vw;left:30vw;bottom:-14vw;background:radial-gradient(circle,rgba(124,108,255,.34),transparent 65%);animation:drift1 25s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(5vw,4vw)}}
+@keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-5vw,3vw)}}
+.hero-grid [data-depth]{will-change:transform}
 .scroll-cue{margin-top:34px;color:#9fb8d4;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:11px}
 .scroll-cue span{width:21px;height:33px;border:2px solid rgba(255,255,255,.3);border-radius:12px;position:relative;display:inline-block}
 .scroll-cue span:before{content:"";position:absolute;left:50%;top:6px;width:4px;height:7px;background:var(--accent);border-radius:2px;transform:translateX(-50%);animation:cue 1.7s infinite}
@@ -198,14 +241,24 @@ details.hosp summary:hover .badge{transform:scale(1.04)}
 @media (prefers-reduced-motion:reduce){
   #hero-canvas{display:none}
   html.fx .reveal{opacity:1!important;transform:none!important;transition:none}
-  .scroll-cue span:before{animation:none}
+  .scroll-cue span:before,.float-card,.float-pill,.aurora span,.live-dot{animation:none!important}
+  .float-card{transform:rotate(-2deg)}
   .card:hover,.cta:hover,.condbtn:hover{transform:none}
   .ripple{display:none}
   html{scroll-behavior:auto}
 }
 
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .hero-visual{max-width:420px}
+  .hero h1 br{display:none}
+}
 @media(max-width:860px){
-  .hero{min-height:auto}
+  .hero{min-height:auto;padding-top:54px}
+  .hero h1{font-size:clamp(1.9rem,8vw,2.6rem)}
+  .hero-trust{gap:18px}
+  .hero-trust b{font-size:1.4rem}
+  .float-pill.fp2{left:0}
   .metricstrip{grid-template-columns:repeat(2,1fr)}
   .grid.cols-3,.grid.cols-2,.formgrid{grid-template-columns:1fr}
   .navlinks{display:none;position:absolute;top:62px;left:0;right:0;background:var(--navy);flex-direction:column;padding:14px 22px;gap:14px}

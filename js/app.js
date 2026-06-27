@@ -44,8 +44,41 @@
     .then(([res, model, facilities]) => {
       if (res) renderEvidence(res);
       if (model) buildCalculator(model);
-      if (facilities) { facilities.forEach((f, i) => (f._id = i)); FAC = facilities; wireLookup(); wireCompare(); }
+      if (facilities) { facilities.forEach((f, i) => (f._id = i)); FAC = facilities; wireLookup(); wireCompare(); fillHeroPreview(facilities); }
     });
+
+  function titleCase(s) {
+    return String(s).toLowerCase().split(" ")
+      .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join(" ")
+      .replace(/\b(Hca|Ucla|Ucsf|Nyu|Va|Llc|Ii|Iii|Iv)\b/g, (m) => m.toUpperCase());
+  }
+  function fillHeroPreview(facs) {
+    const el = document.getElementById("hero-preview");
+    if (!el) return;
+    const MARQUEE = ["MAYO CLINIC HOSPITAL", "CLEVELAND CLINIC", "MASSACHUSETTS GENERAL", "STANFORD", "UCLA",
+      "NYU LANGONE", "CEDARS-SINAI", "JOHNS HOPKINS", "DUKE UNIVERSITY", "NORTHWESTERN MEMORIAL", "HOUSTON METHODIST", "UCSF"];
+    let pick = null;
+    for (const m of MARQUEE) {
+      const f = facs.find((x) => x.name && x.name.includes(m) && x.mean_err != null && x.mean_err < 0.99 && x.cond && Object.keys(x.cond).length >= 4);
+      if (f) { pick = f; break; }
+    }
+    if (!pick) pick = facs.find((x) => x.mean_err != null && x.mean_err < 0.92 && x.cond && Object.keys(x.cond).length >= 4);
+    if (!pick) return;
+    const [bcls, blbl] = ratingBand(pick.mean_err);
+    const order = [["HF", "Heart failure"], ["PN", "Pneumonia"], ["COPD", "COPD / lung"], ["HIP_KNEE", "Hip / knee"], ["AMI", "Heart attack"], ["CABG", "Bypass"]];
+    const conds = order.filter(([k]) => pick.cond && pick.cond[k] != null).slice(0, 3);
+    const bars = conds.map(([k, lbl]) => {
+      const v = pick.cond[k], cls = ratingBand(v)[0];
+      const w = Math.max(14, Math.min(100, Math.round((1.25 - v) / 0.45 * 100)));
+      return `<div class="fc-cond"><span class="lbl">${lbl}</span><span class="fc-bar"><i class="${cls}" style="width:${w}%"></i></span><span class="fc-ratio">${v.toFixed(2)}</span></div>`;
+    }).join("");
+    el.innerHTML = `<div class="fc-head"><div><div class="fc-name">${titleCase(pick.name)}</div>
+      <div class="fc-loc">${pick.state}${pick.star && pick.star !== "NA" ? " · ★" + pick.star : ""}</div></div>
+      <span class="badge ${bcls}">${blbl}</span></div>
+      <div class="fc-conds">${bars}</div>
+      <div class="fc-foot"><span class="live-dot"></span> Official CMS Medicare data</div>`;
+    el.removeAttribute("aria-hidden");
+  }
 
   // ---- compare state ----
   const cmp = new Map();
