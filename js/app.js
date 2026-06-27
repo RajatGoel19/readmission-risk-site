@@ -1,11 +1,11 @@
-/* SafeStay Hospital Check — patient-facing front-end
+/* SafeStay Hospital Check, patient-facing front-end
    Helps patients compare hospitals on avoidable 30-day readmissions, overall
    and by condition, using official CMS data. Plus a browser-side educational
    risk calculator. No data leaves the device. */
 (function () {
   "use strict";
   const $ = (s) => document.querySelector(s);
-  const fmt = (x, d = 3) => (x == null || isNaN(x) ? "—" : Number(x).toFixed(d));
+  const fmt = (x, d = 3) => (x == null || isNaN(x) ? "…" : Number(x).toFixed(d));
   $("#yr").textContent = "2026";
 
   const CONDITIONS = [
@@ -57,7 +57,7 @@
     setText("h-nhosp", nh ? nh.toLocaleString() + "+" : "2,800+");
     setText("r-n", nh ? nh.toLocaleString() : "2,833");
     setText("r-auc", fmt(auc, 3));
-    if (ci) setText("r-ci", `(95% CI ${fmt(ci[0], 2)}–${fmt(ci[1], 2)})`);
+    if (ci) setText("r-ci", `(95% CI ${fmt(ci[0], 2)}-${fmt(ci[1], 2)})`);
     const star = res.star_only_auc != null ? res.star_only_auc : 0.70;
     setText("r-star", fmt(star, 3));
     if (res.data_vintage) setText("foot-vintage", "Source: " + res.data_vintage);

@@ -1,4 +1,4 @@
-# Readmission Risk AI — public research website
+# Readmission Risk AI, public research website
 
 Static site (no build step) for the Hospital Readmission Risk AI research
 project. Presents the problem's national importance, the interpretable
@@ -16,7 +16,7 @@ data/
   web_model.json  JS-portable logistic model (client-side calculator)
   facilities.json compact facility risk lookup table
 ```
-All numbers load live from `data/results.json` — regenerate the model and copy
+All numbers load live from `data/results.json`, regenerate the model and copy
 the file to keep the site in sync.
 
 ## Run locally
