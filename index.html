@@ -170,16 +170,24 @@
     <div class="grid cols-3" style="margin-top:30px">
       <div class="card"><div class="statbig" id="r-auc">…</div><p class="muted">Accuracy (ROC-AUC) of the research model at telling higher-risk from lower-risk hospitals, cross-validated <span id="r-ci"></span>. 0.5 is a coin flip; 1.0 is perfect.</p></div>
       <div class="card"><div class="statbig" id="r-n">2,833</div><p class="muted">U.S. hospitals analyzed, using five official CMS Care Compare datasets from the latest (2026) refresh.</p></div>
-      <div class="card"><div class="statbig" id="r-star">…</div><p class="muted">Accuracy using the CMS star rating alone. The research model does better by adding independent clinical-quality signals.</p></div>
+      <div class="card"><div class="statbig" id="r-star">…</div><p class="muted">Accuracy using the CMS star rating alone. The full model adds more CMS quality signals (mortality, infections, patient experience) that are correlated with, but not derived from, readmissions.</p></div>
     </div>
     <div class="grid cols-3" style="margin-top:26px">
       <figure class="card figcard"><img src="assets/figures/feature_importance.png" alt="What predicts readmissions" loading="lazy"/><figcaption><strong>What predicts more readmissions.</strong> Beyond the star rating, hospital-wide mortality, infections, and patient experience matter most.</figcaption></figure>
-      <figure class="card figcard"><img src="assets/figures/per_condition_auc.png" alt="Accuracy by condition" loading="lazy"/><figcaption><strong>By condition.</strong> Risk is modeled separately for each major condition; higher-volume conditions are predicted most reliably.</figcaption></figure>
+      <figure class="card figcard"><img src="assets/figures/per_condition_cv.png" alt="Accuracy by condition" loading="lazy"/><figcaption><strong>By condition (honest).</strong> Single-condition prediction is harder and noisier, so no condition beats the all-cause baseline. High-volume conditions (heart failure, pneumonia) predict best; hip/knee and heart attack are weakest. The value of by-condition risk is targeting a service line, not higher accuracy.</figcaption></figure>
       <figure class="card figcard"><img src="assets/figures/learning_curve.png" alt="Learning curve" loading="lazy"/><figcaption><strong>Checked for overfitting.</strong> Training and validation accuracy stay close together (small gap), so the model generalizes rather than memorizing.</figcaption></figure>
     </div>
     <div class="grid cols-2" style="margin-top:22px">
       <div class="card"><h3><span class="icon">✓</span>Honest &amp; transparent</h3><p>The model is interpretable, every prediction can be traced to specific quality measures, and it's "leakage-free": it never uses information that would let it cheat. We tested it for overfitting and chose a model whose training and validation accuracy stay close. It's research software for comparing hospitals, <strong>not a medical device</strong>.</p></div>
       <div class="card"><h3><span class="icon">✓</span>Public &amp; reproducible</h3><p>It uses only public CMS data, no private patient records, so any researcher, journalist, or regulator can reproduce it. Methods and code are documented in a companion research repository.</p></div>
+    </div>
+    <div class="grid cols-2" style="margin-top:22px;align-items:start">
+      <figure class="card figcard"><img src="assets/figures/circularity_ladder.png" alt="Where the signal comes from" loading="lazy"/><figcaption><strong>Where the accuracy comes from.</strong> A leakage and circularity check, built feature group by feature group.</figcaption></figure>
+      <div class="card">
+        <h3><span class="icon">!</span>What is, and isn't, independent</h3>
+        <p>Being honest about a fair concern: most of the model's accuracy comes from a hospital's broader CMS-measured quality, which is <strong>correlated with</strong> readmissions. Features fully <em>outside</em> the CMS quality system (size, ownership, community income and rurality) predict at only <strong>0.645</strong> on their own.</p>
+        <p>Two things keep it credible. First, no feature is <strong>derived from</strong> the readmission ratio (every readmission-defining quantity is excluded), so this is correlated quality, not leakage. Second, the CMS star rating partly bakes in readmissions, yet with the star <strong>removed</strong> the model still reaches <strong>0.697</strong> from genuinely distinct measures (deaths, infections, surveys), up from 0.66 in the earlier study. The full model's edge over the star alone is real but modest.</p>
+      </div>
     </div>
   </div>
 </section>
