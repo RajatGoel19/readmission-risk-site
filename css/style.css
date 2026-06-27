@@ -1,0 +1,110 @@
+/* Readmission Risk AI — public research site
+   Theme: deep navy + teal, clean academic-modern. */
+:root{
+  --navy:#0b1f3a; --navy2:#13315c; --teal:#17a2b8; --teal-d:#0f7f90;
+  --accent:#2dd4bf; --ink:#1a2433; --muted:#5b6b7f; --line:#e3e9f0;
+  --bg:#f6f9fc; --card:#ffffff; --good:#198754; --warn:#dc7609; --bad:#c0392b;
+  --shadow:0 6px 24px rgba(11,31,58,.08); --radius:14px;
+  --maxw:1080px; --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{line-height:1.2;color:var(--navy);font-weight:700;margin:0 0 .5em}
+h2{font-size:clamp(1.6rem,3vw,2.2rem)}
+a{color:var(--teal-d);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.section{padding:72px 0;border-bottom:1px solid var(--line)}
+.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:700;color:var(--teal-d);margin-bottom:.6em}
+.lead{font-size:1.12rem;color:var(--muted);max-width:62ch}
+.muted{color:var(--muted)}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(11,31,58,.96);backdrop-filter:blur(8px)}
+nav .container{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{color:#fff;font-weight:700;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(45,212,191,.25)}
+.navlinks{display:flex;gap:22px}
+.navlinks a{color:#cfe0f0;font-size:.92rem;font-weight:500}
+.navlinks a:hover{color:#fff;text-decoration:none}
+.nav-toggle{display:none;background:none;border:0;color:#fff;font-size:1.5rem;cursor:pointer}
+
+/* Hero */
+.hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 55%,#0a2f55 100%);color:#eaf2fb;padding:84px 0 72px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(45,212,191,.18),transparent 70%)}
+.hero h1{color:#fff;font-size:clamp(2rem,4.6vw,3.1rem);margin-bottom:.35em}
+.hero .lead{color:#bcd2ea;max-width:60ch}
+.hero .tagchips{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 30px}
+.chip{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);color:#dcebff;padding:6px 13px;border-radius:999px;font-size:.82rem;color:#cfe0f0}
+.cta{display:inline-block;background:var(--accent);color:#062a2a;font-weight:700;padding:13px 24px;border-radius:10px;margin-right:12px}
+.cta:hover{background:#5ee7d6;text-decoration:none}
+.cta.ghost{background:transparent;color:#cfe0f0;border:1px solid rgba(255,255,255,.3)}
+.cta.ghost:hover{background:rgba(255,255,255,.08);color:#fff}
+
+/* Hero metric strip */
+.metricstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px}
+.metric{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:18px 16px;text-align:center}
+.metric .val{font-size:1.9rem;font-weight:800;color:#fff;line-height:1.05}
+.metric .lbl{font-size:.78rem;color:#9fb8d4;margin-top:6px;text-transform:uppercase;letter-spacing:.06em}
+
+/* Cards / grids */
+.grid{display:grid;gap:22px}
+.grid.cols-3{grid-template-columns:repeat(3,1fr)}
+.grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.card h3{font-size:1.12rem;display:flex;align-items:center;gap:10px}
+.icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--accent));display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:800;flex:none}
+.statbig{font-size:2.2rem;font-weight:800;color:var(--navy)}
+.statbig small{font-size:.95rem;color:var(--muted);font-weight:500}
+
+/* Figures */
+figure{margin:0}
+.figcard img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);background:#fff}
+figcaption{font-size:.85rem;color:var(--muted);margin-top:10px}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{color:var(--navy);font-weight:700;background:#f1f6fb}
+tbody tr:hover{background:#f7fbfd}
+.bar-cell{position:relative}
+.bar{height:8px;border-radius:4px;background:var(--teal);display:inline-block;vertical-align:middle}
+
+/* Interactive */
+.tool{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
+.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 22px;margin:18px 0}
+.field label{display:block;font-size:.85rem;font-weight:600;color:var(--navy);margin-bottom:5px}
+.field input[type=range]{width:100%}
+.field select,.field input[type=text]{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:.92rem}
+.rangeval{font-weight:700;color:var(--teal-d)}
+.gauge{text-align:center;padding:10px}
+.gauge .pct{font-size:3rem;font-weight:800;line-height:1}
+.gauge .band{font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.9rem}
+.risklow{color:var(--good)} .riskmod{color:var(--warn)} .riskhigh{color:var(--bad)}
+.meter{height:14px;border-radius:8px;background:linear-gradient(90deg,#198754,#e0a800,#c0392b);position:relative;margin:14px 0}
+.meter .needle{position:absolute;top:-5px;width:4px;height:24px;background:#0b1f3a;border-radius:2px;transform:translateX(-50%)}
+
+/* Lookup */
+.lookup input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:1rem}
+.results-list{margin-top:14px;max-height:360px;overflow:auto;border:1px solid var(--line);border-radius:10px}
+.results-list .row{display:flex;justify-content:space-between;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line);align-items:center}
+.results-list .row:last-child{border-bottom:0}
+.pill{font-size:.74rem;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.pill.low{background:#e7f5ee;color:#198754} .pill.mod{background:#fdf3e3;color:#b5710a} .pill.high{background:#fdecea;color:#c0392b}
+
+/* About / timeline */
+.endeavor li{margin-bottom:10px}
+.note{background:#f1f8fa;border-left:4px solid var(--teal);padding:14px 18px;border-radius:0 10px 10px 0;font-size:.94rem;color:#334}
+.disclaimer{background:#fff8ec;border:1px solid #f0dcb8;border-radius:12px;padding:16px 20px;font-size:.88rem;color:#6b5326}
+footer{background:var(--navy);color:#9fb8d4;padding:40px 0;font-size:.88rem}
+footer a{color:#bcd2ea}
+.foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
+
+@media(max-width:860px){
+  .metricstrip{grid-template-columns:repeat(2,1fr)}
+  .grid.cols-3,.grid.cols-2,.formgrid{grid-template-columns:1fr}
+  .navlinks{display:none;position:absolute;top:62px;left:0;right:0;background:var(--navy);flex-direction:column;padding:14px 22px;gap:14px}
+  .navlinks.open{display:flex}
+  .nav-toggle{display:block}
+}

@@ -1,0 +1,77 @@
+{
+  "intercept": 0.011747612313327709,
+  "numeric": [
+    {
+      "name": "hcahps_discharge_info",
+      "median": 86.0,
+      "mean": 85.16448993999295,
+      "scale": 3.6100688548269195,
+      "coef": -0.4387665710053447
+    },
+    {
+      "name": "psi_90",
+      "median": 0.96,
+      "mean": 0.9942640310624781,
+      "scale": 0.19047592177338357,
+      "coef": 0.07085647377318141
+    },
+    {
+      "name": "sir_mrsa",
+      "median": 0.5905,
+      "mean": 0.642298446876103,
+      "scale": 0.4404019312748926,
+      "coef": 0.03686463513978559
+    },
+    {
+      "name": "sir_clabsi",
+      "median": 0.476,
+      "mean": 0.5237578538651606,
+      "scale": 0.40665697172633875,
+      "coef": 0.028197316278306028
+    },
+    {
+      "name": "log_volume",
+      "median": 6.498282149476434,
+      "mean": 6.298283232837135,
+      "scale": 1.284974948436228,
+      "coef": 0.06717887855900759
+    }
+  ],
+  "categorical": [
+    {
+      "name": "ownership",
+      "levels": {
+        "Government - Federal": 0.38831345851017524,
+        "Government - Hospital District or Authority": -0.06635345610092923,
+        "Government - Local": 0.20954385161521716,
+        "Government - State": 0.04531067815997837,
+        "NA": 0.7795629969573923,
+        "Physician": -0.48172630810802763,
+        "Proprietary": 0.326584384250655,
+        "Tribal": -0.5911529576205371,
+        "Voluntary non-profit - Church": -0.3671560399105692,
+        "Voluntary non-profit - Other": -0.18441872372733037,
+        "Voluntary non-profit - Private": -0.051168729405886675
+      }
+    }
+  ],
+  "feature_order": [
+    "num__hcahps_discharge_info",
+    "num__psi_90",
+    "num__sir_mrsa",
+    "num__sir_clabsi",
+    "num__log_volume",
+    "cat__ownership_Government - Federal",
+    "cat__ownership_Government - Hospital District or Authority",
+    "cat__ownership_Government - Local",
+    "cat__ownership_Government - State",
+    "cat__ownership_NA",
+    "cat__ownership_Physician",
+    "cat__ownership_Proprietary",
+    "cat__ownership_Tribal",
+    "cat__ownership_Voluntary non-profit - Church",
+    "cat__ownership_Voluntary non-profit - Other",
+    "cat__ownership_Voluntary non-profit - Private"
+  ],
+  "note": "p = sigmoid(intercept + sum(coef*standardized_numeric) + sum(coef*onehot_cat))"
+}
