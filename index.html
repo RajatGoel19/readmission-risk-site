@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hospital Readmission Risk AI — Interpretable Facility-Level Risk Stratification</title>
-<meta name="description" content="An interpretable machine-learning system that identifies U.S. hospitals at elevated risk of excess Medicare readmissions using only public CMS data — a research project advancing healthcare quality and Medicare cost reduction in the national interest."/>
-<meta property="og:title" content="Hospital Readmission Risk AI"/>
-<meta property="og:description" content="Interpretable, leakage-free AI for facility-level hospital readmission risk on public CMS data."/>
+<title>Is Your Hospital Safe? — Find Hospitals With Fewer Avoidable Readmissions</title>
+<meta name="description" content="A free, plain-language tool that helps patients and families compare U.S. hospitals on how often they send patients back within 30 days — using official Medicare data for 2,800+ hospitals, by medical condition."/>
+<meta property="og:title" content="Is Your Hospital Safe? — Compare Hospital Readmission Safety"/>
+<meta property="og:description" content="Compare 2,800+ U.S. hospitals on avoidable readmissions, by condition, using official Medicare data. Free, plain-language, no sign-up."/>
 <meta property="og:type" content="website"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -15,236 +15,181 @@
 <body>
 <nav>
   <div class="container">
-    <div class="brand"><span class="dot"></span> Readmission Risk&nbsp;AI</div>
+    <div class="brand"><span class="dot"></span> SafeStay&nbsp;Hospital&nbsp;Check</div>
     <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
     <div class="navlinks" id="nav">
-      <a href="#importance">Why it matters</a>
-      <a href="#approach">Approach</a>
-      <a href="#results">Results</a>
-      <a href="#disease">By disease</a>
-      <a href="#calculator">Risk calculator</a>
-      <a href="#lookup">Hospital lookup</a>
-      <a href="#about">Researcher</a>
+      <a href="#find">Find a hospital</a>
+      <a href="#why">Why it matters</a>
+      <a href="#protect">Protect yourself</a>
+      <a href="#how">How it works</a>
+      <a href="#about">About</a>
     </div>
   </div>
 </nav>
 
 <header class="hero">
   <div class="container">
-    <div class="eyebrow" style="color:var(--accent)">Healthcare AI · Public-data research</div>
-    <h1>Finding the hospitals most at risk of avoidable readmissions — before patients pay the price.</h1>
-    <p class="lead">An interpretable, leakage-free machine-learning system that stratifies <strong id="h-nhosp">2,800+</strong> U.S. hospitals by their risk of excess Medicare readmissions, using only publicly available CMS Care&nbsp;Compare data — so quality-improvement resources reach the facilities that need them most.</p>
+    <div class="eyebrow" style="color:var(--accent)">Free · Plain-language · Official Medicare data</div>
+    <h1>Choosing a hospital? See which ones send the fewest patients back.</h1>
+    <p class="lead">When you leave the hospital, you want to stay home and get better — not end up back in a bed within a month. Some hospitals readmit far more patients than others. This free tool helps you and your family <strong>compare <span id="h-nhosp">2,800+</span> U.S. hospitals</strong> on avoidable readmissions — overall and for your specific condition — using official Medicare data.</p>
     <div class="tagchips">
-      <span class="chip">Explainable Boosting Machine</span>
-      <span class="chip">CMS Care Compare (FY2026)</span>
-      <span class="chip">Disease-specific risk</span>
-      <span class="chip">No proprietary patient records</span>
+      <span class="chip">No sign-up</span>
+      <span class="chip">Official CMS / Medicare data</span>
+      <span class="chip">By medical condition</span>
+      <span class="chip">Your data never leaves your device</span>
     </div>
-    <a class="cta" href="#calculator">Try the live risk calculator</a>
-    <a class="cta ghost" href="#results">See the results</a>
-
-    <div class="metricstrip">
-      <div class="metric"><div class="val" id="m-auc">—</div><div class="lbl">ROC-AUC (cross-validated)</div></div>
-      <div class="metric"><div class="val" id="m-lift">—</div><div class="lbl">vs. CMS star rating alone</div></div>
-      <div class="metric"><div class="val" id="m-cond">6</div><div class="lbl">Disease-specific models</div></div>
-      <div class="metric"><div class="val" id="m-n">—</div><div class="lbl">Hospitals analyzed</div></div>
-    </div>
+    <a class="cta" href="#find">Find &amp; compare hospitals</a>
+    <a class="cta ghost" href="#why">What is a readmission?</a>
   </div>
 </header>
 
-<!-- WHY IT MATTERS -->
-<section class="section" id="importance">
+<!-- FIND A HOSPITAL (centerpiece) -->
+<section class="section" id="find">
   <div class="container">
-    <div class="eyebrow">A problem of national importance</div>
-    <h2>Avoidable readmissions cost Medicare billions and signal real harm to patients.</h2>
-    <p class="lead">Reducing them is an explicit national priority — codified in federal law and tied to billions of dollars in Medicare payments every year.</p>
-    <div class="grid cols-3" style="margin-top:34px">
-      <div class="card"><div class="statbig">~$26B<small>/year</small></div><p>Estimated annual Medicare spending on hospital readmissions, with roughly <strong>$17&nbsp;billion</strong> tied to returns considered potentially avoidable.</p></div>
-      <div class="card"><div class="statbig">~3.8M<small>/year</small></div><p>30-day adult hospital readmissions in the U.S., at an average cost of about <strong>$15,200</strong> each (HCUP, 2018).</p></div>
-      <div class="card"><div class="statbig">~4 in 5</div><p>Hospitals evaluated under the CMS Hospital Readmissions Reduction Program received a payment penalty in FY2025 (penalties up to <strong>3%</strong> of Medicare payments).</p></div>
-    </div>
-    <p class="muted" style="margin-top:22px;font-size:.9rem">Congress created the <strong>Hospital Readmissions Reduction Program (HRRP)</strong> under the Affordable Care Act (2010) to reduce avoidable readmissions. Yet hospitals, payers, and regulators still lack transparent, interpretable tools to see <em>which</em> facilities are most at risk and <em>why</em> — using data that is already public. This project addresses that gap.</p>
-  </div>
-</section>
+    <div class="eyebrow">Find &amp; compare hospitals</div>
+    <h2>Look up a hospital — and check your condition.</h2>
+    <p class="lead">Search by hospital name or your state. Then pick the condition you care about to see how often that hospital readmits those patients compared with what's expected.</p>
 
-<!-- APPROACH -->
-<section class="section" id="approach">
-  <div class="container">
-    <div class="eyebrow">Approach</div>
-    <h2>Interpretable risk stratification from public data — designed for trust and action.</h2>
-    <div class="grid cols-2" style="margin-top:30px">
-      <div class="card"><h3><span class="icon">1</span>Facility-level, not a black box</h3><p>The system predicts which <strong>hospitals</strong> carry elevated readmission risk — a decision-support tool for health systems, payers, and policymakers — rather than profiling individual patients. The primary model is an <strong>Explainable Boosting Machine</strong>, a glass-box model whose every prediction can be traced to specific, clinically meaningful factors.</p></div>
-      <div class="card"><h3><span class="icon">2</span>Public data, no proprietary records</h3><p>Built entirely from five public CMS Care Compare datasets — readmissions, hospital characteristics, patient experience (HCAHPS), healthcare-associated infections, and mortality/complications. No protected health information is used, so the method is reproducible by any researcher or regulator.</p></div>
-      <div class="card"><h3><span class="icon">3</span>Leakage-free by design</h3><p>Every input that mechanically defines the readmission ratio (predicted/expected rates, raw readmission counts, CMS readmission-group scores) is deliberately <strong>excluded</strong>. The model earns its accuracy from independent quality signals — mortality, infections, patient experience, and volume — not from circular reasoning.</p></div>
-      <div class="card"><h3><span class="icon">4</span>Disease-specific and validated honestly</h3><p>Beyond an overall score, the system builds <strong>six condition-specific models</strong> (heart attack, heart failure, pneumonia, COPD, CABG surgery, hip/knee replacement). Disease models are validated with <strong>group-aware splitting</strong> so a hospital never appears in both training and test data — preventing optimistic bias.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- RESULTS -->
-<section class="section" id="results">
-  <div class="container">
-    <div class="eyebrow">Results</div>
-    <h2>Accurate, well-calibrated, and a clear gain over the policy status quo.</h2>
-    <p class="lead">All figures below are generated directly from the modeling pipeline on current CMS data and load live from the model's result files.</p>
-
-    <div class="grid cols-3" style="margin-top:30px">
-      <div class="card"><div class="statbig" id="r-auc">—</div><p class="muted">Cross-validated ROC-AUC of the best model <span id="r-ci"></span>. Up from the project's earlier published baseline of ~0.72.</p></div>
-      <div class="card"><div class="statbig" id="r-brier">—</div><p class="muted">Brier score (lower is better) — the model's risk probabilities are well calibrated, so a "70% risk" really means about 70%.</p></div>
-      <div class="card"><div class="statbig" id="r-star">—</div><p class="muted">ROC-AUC using only the CMS overall star rating. The full model's added clinical features lift performance well beyond it.</p></div>
-    </div>
-
-    <div class="grid cols-2" style="margin-top:26px">
-      <figure class="card figcard"><img src="assets/figures/roc_overall.png" alt="ROC curve"/><figcaption><strong>Receiver operating characteristic (hold-out set).</strong> The curve's area summarizes how well the model separates high- from low-risk hospitals.</figcaption></figure>
-      <figure class="card figcard"><img src="assets/figures/calibration_overall.png" alt="Calibration curve"/><figcaption><strong>Calibration.</strong> Predicted probabilities track observed high-risk frequency closely along the diagonal.</figcaption></figure>
-    </div>
-
-    <div class="card" style="margin-top:26px">
-      <h3>Model comparison (cross-validated ROC-AUC)</h3>
-      <table id="cv-table"><thead><tr><th>Model</th><th>ROC-AUC</th><th style="width:45%">Relative</th></tr></thead><tbody></tbody></table>
-      <p class="muted" style="font-size:.85rem;margin-top:10px">Repeated stratified 5-fold cross-validation across the full cohort. The interpretable model is competitive with the strongest black-box ensembles — accuracy without sacrificing transparency.</p>
-    </div>
-  </div>
-</section>
-
-<!-- DISEASE-SPECIFIC -->
-<section class="section" id="disease">
-  <div class="container">
-    <div class="eyebrow">Disease-specific risk</div>
-    <h2>One size does not fit all — readmission risk is condition-specific.</h2>
-    <p class="lead">The same hospital can excel at joint-replacement recovery yet struggle with heart-failure transitions. Condition-level models let quality teams target the <em>right</em> service line.</p>
-    <div class="grid cols-2" style="margin-top:30px;align-items:start">
-      <figure class="card figcard"><img src="assets/figures/per_condition_auc.png" alt="Per-condition ROC-AUC"/><figcaption><strong>Hold-out ROC-AUC by condition</strong> (group-aware validation). Higher-volume conditions like heart failure and pneumonia are predicted most reliably.</figcaption></figure>
-      <div class="card">
-        <h3>How to read this</h3>
-        <table id="cond-table"><thead><tr><th>Condition</th><th>Hospitals (test)</th><th>ROC-AUC</th></tr></thead><tbody></tbody></table>
-        <p class="note" style="margin-top:16px">Single-condition ratios are noisier than an averaged score, so condition-level AUCs are lower than the overall model — an honest reflection of the harder, more actionable task. Heart failure and pneumonia, the highest-volume conditions, are the most predictable.</p>
+    <div class="tool" style="margin-top:22px">
+      <div class="bigsearch">
+        <input type="text" id="search" placeholder="Type a hospital name or your state (e.g. &quot;Mount Sinai&quot;, &quot;Texas&quot;, &quot;OH&quot;)…" autocomplete="off"/>
       </div>
+      <div class="condbar" id="condbar"></div>
+      <div class="results-list" id="lookup-results"><div class="row muted"><span>Start typing a hospital name or your state above…</span></div></div>
+      <div class="legend">
+        <span><span class="dot-better"></span> Better than expected — readmits fewer patients</span>
+        <span><span class="dot-avg"></span> About average</span>
+        <span><span class="dot-worse"></span> Worse than expected — readmits more patients</span>
+      </div>
+      <p class="muted" style="font-size:.82rem;margin-top:12px">Ratings come from each hospital's official Medicare <em>Excess Readmission Ratio</em> — how its 30-day readmissions compare with what's expected for hospitals treating similar patients. A value above 1.0 means more readmissions than expected. This describes the <strong>hospital</strong>, not any one person.</p>
     </div>
   </div>
 </section>
 
-<!-- INTERPRETABILITY -->
-<section class="section" id="interpret">
+<!-- WHY IT MATTERS TO YOU -->
+<section class="section" id="why">
   <div class="container">
-    <div class="eyebrow">Why a hospital is flagged</div>
-    <h2>Every prediction is explainable — the model shows its reasoning.</h2>
-    <div class="grid cols-2" style="margin-top:30px;align-items:start">
-      <figure class="card figcard"><img src="assets/figures/feature_importance.png" alt="Feature importance"/><figcaption><strong>Leading risk factors</strong> (mean absolute contribution, interpretable model).</figcaption></figure>
+    <div class="eyebrow">Why this matters to you</div>
+    <h2>A readmission means going back to the hospital — and it's often preventable.</h2>
+    <p class="lead">A "30-day readmission" is when a patient is admitted again within a month of going home. It usually means something went wrong with recovery — and where you're treated changes how likely that is.</p>
+    <div class="grid cols-3" style="margin-top:32px">
+      <div class="card"><div class="statbig">~1 in 7</div><p>Medicare patients is readmitted within 30 days of leaving the hospital — about <strong>3.8 million</strong> readmissions a year in the U.S.</p></div>
+      <div class="card"><div class="statbig">~$15,200</div><p>is the average cost of a single readmission — a burden on patients, families, and taxpayers, on top of the health risk of another hospital stay.</p></div>
+      <div class="card"><div class="statbig">Hospitals<small> differ a lot</small></div><p>Two hospitals treating similar patients can have very different readmission rates. Medicare even reduces payments to hospitals with too many — because many are avoidable.</p></div>
+    </div>
+    <p class="note" style="margin-top:24px">You have the right to choose where you get care (except in a true emergency). Comparing hospitals ahead of a planned surgery or for an ongoing condition like heart failure can help you pick a place that's more likely to get you home — and keep you there.</p>
+  </div>
+</section>
+
+<!-- PROTECT YOURSELF -->
+<section class="section" id="protect">
+  <div class="container">
+    <div class="eyebrow">Protect yourself &amp; your family</div>
+    <h2>Simple steps that lower the chance of going back.</h2>
+    <p class="lead">No matter which hospital you choose, these evidence-based habits around discharge are some of the biggest protectors against an avoidable readmission.</p>
+    <div class="grid cols-2" style="margin-top:28px;align-items:start">
       <div class="card">
-        <h3>The clinical story</h3>
-        <p>After the CMS star rating, the strongest predictors of excess readmissions are <strong>independent clinical-quality signals</strong> that the model adds:</p>
-        <ul>
-          <li><strong>30-day mortality</strong> — especially heart failure, stroke, and COPD.</li>
-          <li><strong>Healthcare-associated infections</strong> — C.&nbsp;difficile and MRSA rates.</li>
-          <li><strong>Patient experience</strong> — discharge information and overall rating.</li>
-          <li><strong>Hospital volume</strong> and ownership structure.</li>
+        <h3>Before you leave the hospital</h3>
+        <ul class="checklist">
+          <li><strong>Get your instructions in writing</strong> — what to do at home, warning signs, and who to call.</li>
+          <li><strong>Review every medication</strong> — what's new, what stopped, and why. Ask about side effects and interactions.</li>
+          <li><strong>Book your follow-up before you go</strong> — seeing a doctor within 7 days sharply lowers readmission risk.</li>
+          <li><strong>Make sure you understand</strong> — repeat the plan back in your own words ("teach-back"). Bring a family member if you can.</li>
         </ul>
-        <p class="muted">In short: hospitals that struggle with broad clinical quality and care transitions also tend to readmit more — a pattern the model quantifies transparently, and one that survives removing the CMS star rating entirely (see the ablation in the research repository).</p>
+      </div>
+      <div class="card">
+        <h3>In the first weeks at home</h3>
+        <ul class="checklist">
+          <li><strong>Take medications exactly as prescribed</strong> — set reminders; don't skip or double up.</li>
+          <li><strong>Keep the follow-up appointment</strong> — even if you feel fine.</li>
+          <li><strong>Know your warning signs</strong> — and call your care team early rather than waiting.</li>
+          <li><strong>Ask about home help</strong> — visiting nurses, pharmacists, and transition programs exist and reduce readmissions.</li>
+        </ul>
       </div>
     </div>
+    <p class="muted" style="margin-top:18px;font-size:.9rem">General education adapted from Medicare and AHRQ patient guidance — not a substitute for your own care team's advice.</p>
   </div>
 </section>
 
-<!-- CALCULATOR -->
+<!-- WHAT MAKES A HOSPITAL SAFER (educational calculator) -->
 <section class="section" id="calculator">
   <div class="container">
-    <div class="eyebrow">Interactive · runs entirely in your browser</div>
-    <h2>Live readmission-risk calculator</h2>
-    <p class="lead">Adjust a hospital's <strong>clinical-quality profile</strong> — patient experience, safety, and infections — and watch its predicted probability of excess readmissions respond. Every slider moves risk in the clinically expected direction. This runs the exported logistic model entirely in your browser; no data leaves your device.</p>
-    <p class="note" style="margin-top:8px">This calculator deliberately uses the <em>actionable clinical levers</em> rather than the CMS star rating (a composite that already bundles these signals together). It illustrates the drivers of risk; the full model — which adds the star rating — reaches the higher accuracy reported above.</p>
-    <div class="tool" style="margin-top:26px">
+    <div class="eyebrow">What makes a hospital safer? · interactive</div>
+    <h2>See what drives a hospital's readmission risk.</h2>
+    <p class="lead">Researchers (including the work behind this site) found that a handful of measurable hospital qualities predict whether a hospital readmits more or fewer patients. Move the controls to see how a hospital's risk changes. It runs entirely in your browser.</p>
+    <div class="tool" style="margin-top:24px">
       <div class="grid cols-2" style="align-items:center">
-        <div>
-          <div class="formgrid" id="calc-fields"></div>
-        </div>
+        <div><div class="formgrid" id="calc-fields"></div></div>
         <div class="gauge">
           <div class="pct" id="g-pct">—</div>
           <div class="band" id="g-band">&nbsp;</div>
           <div class="meter"><div class="needle" id="g-needle" style="left:50%"></div></div>
-          <p class="muted" id="g-note" style="font-size:.86rem">Probability that this hospital's average Excess Readmission Ratio is ≥ 1.0 (readmitting more than expected for its case mix).</p>
+          <p class="muted" id="g-note" style="font-size:.86rem">Estimated chance this hospital readmits more patients than expected. An illustration of the drivers — not a score for any specific hospital or person.</p>
         </div>
       </div>
     </div>
-    <p class="disclaimer" style="margin-top:18px">Educational decision-support demonstration based on facility-level public data. It is <strong>not</strong> a medical device and must not be used for individual patient care or clinical decisions.</p>
   </div>
 </section>
 
-<!-- LOOKUP -->
-<section class="section" id="lookup">
+<!-- HOW IT WORKS / EVIDENCE -->
+<section class="section" id="how">
   <div class="container">
-    <div class="eyebrow">Explore the cohort</div>
-    <h2>Hospital risk lookup</h2>
-    <p class="lead">Search any hospital in the study cohort to see its modeled readmission-risk score and CMS profile.</p>
-    <div class="tool lookup" style="margin-top:22px">
-      <input type="text" id="search" placeholder="Search by hospital name or state (e.g. 'Cleveland', 'TX')…" autocomplete="off"/>
-      <div class="results-list" id="lookup-results"><div class="row muted"><span>Start typing to search…</span></div></div>
-      <p class="muted" style="font-size:.82rem;margin-top:10px">Modeled risk reflects facility-level patterns in public CMS data and is a quality-improvement signal, not a verdict on any hospital. “Mean ERR” is the hospital's average Excess Readmission Ratio across reported HRRP conditions.</p>
+    <div class="eyebrow">How it works &amp; the evidence</div>
+    <h2>Built on official data, checked carefully, and openly explained.</h2>
+    <p class="lead">This isn't a guess. The hospital comparisons use official Medicare quality data, and the underlying research model was tested with the same rigor expected of medical research.</p>
+    <div class="grid cols-3" style="margin-top:30px">
+      <div class="card"><div class="statbig" id="r-auc">—</div><p class="muted">Accuracy (ROC-AUC) of the research model at telling higher-risk from lower-risk hospitals, cross-validated <span id="r-ci"></span>. 0.5 is a coin flip; 1.0 is perfect.</p></div>
+      <div class="card"><div class="statbig" id="r-n">2,833</div><p class="muted">U.S. hospitals analyzed, using five official CMS Care Compare datasets from the latest (2026) refresh.</p></div>
+      <div class="card"><div class="statbig" id="r-star">—</div><p class="muted">Accuracy using the CMS star rating alone. The research model does better by adding independent clinical-quality signals.</p></div>
+    </div>
+    <div class="grid cols-2" style="margin-top:26px">
+      <figure class="card figcard"><img src="assets/figures/feature_importance.png" alt="What predicts readmissions" loading="lazy"/><figcaption><strong>What predicts more readmissions.</strong> Beyond the star rating, hospital-wide mortality, infections, and patient experience matter most.</figcaption></figure>
+      <figure class="card figcard"><img src="assets/figures/per_condition_auc.png" alt="Accuracy by condition" loading="lazy"/><figcaption><strong>By condition.</strong> The tool models risk separately for each major condition; higher-volume conditions are predicted most reliably.</figcaption></figure>
+    </div>
+    <div class="grid cols-2" style="margin-top:22px">
+      <div class="card"><h3><span class="icon">✓</span>Honest &amp; transparent</h3><p>The model is interpretable — every prediction can be traced to specific quality measures — and it's "leakage-free": it never uses information that would let it cheat. It's research software for comparing hospitals, <strong>not a medical device</strong>.</p></div>
+      <div class="card"><h3><span class="icon">✓</span>Public &amp; reproducible</h3><p>It uses only public CMS data — no private patient records — so any researcher, journalist, or regulator can reproduce it. Methods and code are documented in a companion research repository.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT / RESEARCHER -->
+<!-- ABOUT / NATIONAL INTEREST -->
 <section class="section" id="about">
   <div class="container">
-    <div class="eyebrow">The researcher & the endeavor</div>
-    <h2>Advancing healthcare quality and Medicare stewardship in the U.S. national interest.</h2>
-    <div class="grid cols-2" style="margin-top:28px;align-items:start">
+    <div class="eyebrow">About this project</div>
+    <h2>Helping patients choose well — and helping the country.</h2>
+    <div class="grid cols-2" style="margin-top:26px;align-items:start">
       <div class="card">
-        <h3>Rajat Goel</h3>
-        <p>Healthcare data scientist and senior data analyst focused on applying interpretable AI to clinical-quality and population-health problems, and a doctoral researcher in artificial intelligence.</p>
-        <p>This project is part of a broader body of work using transparent machine learning to make the U.S. healthcare system safer, more efficient, and more accountable with the data it already collects.</p>
-        <p class="muted" style="font-size:.9rem">Research artifacts, methodology, and reproducible code are maintained in a companion repository. Contact details are available on request.</p>
-      </div>
-      <div class="card endeavor">
-        <h3>Why this work serves the national interest</h3>
-        <ul>
-          <li><strong>Substantial merit &amp; national importance.</strong> Reducing avoidable readmissions is a federal priority tied to billions in Medicare spending and to patient safety nationwide.</li>
-          <li><strong>Reproducible public benefit.</strong> The method uses only open CMS data and interpretable models, so any health system, payer, or regulator in the country can apply it — no proprietary data required.</li>
-          <li><strong>Beyond existing tools.</strong> The model surfaces risk signals (clinical quality, infections, care transitions) that go beyond the CMS star rating, and does so transparently enough to act on.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- METHODS -->
-<section class="section" id="methods">
-  <div class="container">
-    <div class="eyebrow">Methods &amp; data</div>
-    <h2>Transparency and limitations</h2>
-    <div class="grid cols-2" style="margin-top:24px">
-      <div class="card">
-        <h3>Data &amp; target</h3>
-        <p>Five public CMS Care Compare datasets (HRRP readmissions, Hospital General Information, HCAHPS, Healthcare-Associated Infections, Complications &amp; Deaths), current as of the 2026 refresh. The modeling target is facility high-risk status, defined as an average Excess Readmission Ratio ≥ 1.0 across reported HRRP conditions.</p>
+        <h3>Why it serves the public interest</h3>
+        <p>Avoidable readmissions harm patients and cost Medicare an estimated <strong>~$26&nbsp;billion a year</strong>, with roughly <strong>$17&nbsp;billion</strong> considered potentially avoidable. Reducing them is an explicit U.S. national priority, written into federal law.</p>
+        <p>When patients can easily see which hospitals are safest for their condition, three things happen: people get better care, families avoid needless return trips, and hospitals compete to improve — lowering avoidable readmissions nationwide. This tool turns data the government already publishes into something a worried family can actually use.</p>
       </div>
       <div class="card">
-        <h3>Honest limitations</h3>
-        <p>This is a <strong>facility-level</strong> risk-stratification and quality-improvement tool, not a patient-level clinical predictor. It reflects associations in administrative data, does not establish causation, and does not yet incorporate social determinants of health — an important direction for future work. It is research software, not a certified medical device.</p>
+        <h3>Who built it</h3>
+        <p>Created by <strong>Rajat Goel</strong>, a healthcare data scientist and doctoral researcher in artificial intelligence, as part of a broader effort to use transparent AI to make U.S. healthcare safer, fairer, and more accountable with the data it already collects.</p>
+        <p class="muted" style="font-size:.9rem">Research methods and reproducible code are maintained in a companion repository. The hospital data shown here is official CMS Care Compare data; this site adds plain-language access and condition-level comparison.</p>
       </div>
-    </div>
-    <div class="card" style="margin-top:22px">
-      <h3>Sources</h3>
-      <ul class="muted" style="font-size:.9rem">
-        <li>CMS — Hospital Readmissions Reduction Program. <a href="https://www.cms.gov/medicare/payment/prospective-payment-systems/acute-inpatient-pps/hospital-readmissions-reduction-program-hrrp" target="_blank" rel="noopener">cms.gov</a></li>
-        <li>CMS Provider Data Catalog — Care Compare hospital datasets. <a href="https://data.cms.gov/provider-data/topics/hospitals" target="_blank" rel="noopener">data.cms.gov</a></li>
-        <li>AHRQ HCUP — national readmission statistics. <a href="https://www.hcup-us.ahrq.gov/" target="_blank" rel="noopener">hcup-us.ahrq.gov</a></li>
-      </ul>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="container foot-grid">
-    <div>
-      <div class="brand" style="margin-bottom:8px"><span class="dot"></span> Readmission Risk AI</div>
-      <div>Interpretable hospital readmission risk from public CMS data.</div>
-      <div style="margin-top:6px" id="foot-vintage">Data: CMS Care Compare.</div>
+  <div class="container">
+    <div class="disclaimer" style="margin-bottom:22px">
+      <strong>Important:</strong> This site is for general information and to help you compare hospitals — it is <strong>not medical advice</strong> and <strong>not a medical device</strong>. The ratings describe a hospital's average performance in public Medicare data; they do <strong>not</strong> predict what will happen to any individual person. Always talk to your own doctor or care team about your care and where to receive it. In an emergency, call 911 or go to the nearest emergency room.
     </div>
-    <div>
-      <strong style="color:#cfe0f0">Research use only.</strong><br/>
-      Not a medical device. Not for individual clinical decisions.<br/>
-      © <span id="yr"></span> Rajat Goel. Built for healthcare quality improvement.
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:8px"><span class="dot"></span> SafeStay Hospital Check</div>
+        <div>Compare hospitals on avoidable readmissions, in plain language.</div>
+        <div style="margin-top:6px" id="foot-vintage">Source: CMS Care Compare (official Medicare data).</div>
+        <div style="margin-top:4px"><a href="https://www.medicare.gov/care-compare/" target="_blank" rel="noopener">Medicare Care Compare</a> · <a href="https://data.cms.gov/provider-data/topics/hospitals" target="_blank" rel="noopener">CMS data</a></div>
+      </div>
+      <div>
+        Free public-interest tool.<br/>
+        No accounts, no tracking of your searches.<br/>
+        © <span id="yr"></span> Rajat Goel.
+      </div>
     </div>
   </div>
 </footer>

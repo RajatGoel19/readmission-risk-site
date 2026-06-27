@@ -101,6 +101,31 @@ footer{background:var(--navy);color:#9fb8d4;padding:40px 0;font-size:.88rem}
 footer a{color:#bcd2ea}
 .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
 
+/* Patient-facing components */
+.bigsearch{display:flex;gap:10px;flex-wrap:wrap}
+.bigsearch input{flex:1;min-width:240px;padding:15px 18px;border:2px solid var(--line);border-radius:12px;font-size:1.05rem}
+.bigsearch input:focus{outline:none;border-color:var(--teal)}
+.condbar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 6px}
+.condbtn{border:1px solid var(--line);background:#fff;color:var(--navy);padding:8px 14px;border-radius:999px;font-size:.88rem;font-weight:600;cursor:pointer;transition:.15s}
+.condbtn:hover{border-color:var(--teal)}
+.condbtn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.badge{font-size:.8rem;font-weight:800;padding:5px 12px;border-radius:999px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.badge.better{background:#e7f5ee;color:#157347}
+.badge.avg{background:#eef3f8;color:#4a6076}
+.badge.worse{background:#fdecea;color:#b42318}
+.badge.na{background:#f3f3f3;color:#888}
+.hosp-meta{font-size:.84rem;color:var(--muted);margin-top:3px}
+.aiscore{font-size:.74rem;color:var(--muted);text-align:right;margin-top:3px}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{position:relative;padding:10px 0 10px 38px;border-bottom:1px solid var(--line)}
+.checklist li:last-child{border-bottom:0}
+.checklist li:before{content:"✓";position:absolute;left:0;top:9px;width:24px;height:24px;background:linear-gradient(135deg,var(--teal),var(--accent));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem}
+.checklist strong{color:var(--navy)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.84rem;color:var(--muted);margin-top:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot-better,.dot-avg,.dot-worse{width:11px;height:11px;border-radius:50%}
+.dot-better{background:#157347}.dot-avg{background:#7d93a8}.dot-worse{background:#b42318}
+
 @media(max-width:860px){
   .metricstrip{grid-template-columns:repeat(2,1fr)}
   .grid.cols-3,.grid.cols-2,.formgrid{grid-template-columns:1fr}
