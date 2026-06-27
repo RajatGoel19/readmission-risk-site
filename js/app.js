@@ -19,6 +19,9 @@
   ];
   let selectedCond = "ALL";
   let FAC = [];
+  // Anonymous engagement counters (never include search text or hospital names)
+  const flags = {};
+  const T = (n) => { try { if (window.track) window.track(n); } catch (e) {} };
 
   // Full state name -> 2-letter code, so "florida" and "FL" both work
   const STATE_CODES = { alabama: "AL", alaska: "AK", arizona: "AZ", arkansas: "AR",
@@ -136,6 +139,7 @@
       out.innerHTML = `<div class="row muted"><span>Start typing a hospital name or your state above…</span></div>`;
       return;
     }
+    if (!flags.search) { flags.search = 1; T("search"); }
     let hits = FAC.filter((f) => matchHospital(f, q));
     if (!hits.length) {
       out.innerHTML = `<div class="row muted"><span>No hospitals match “${q}”. Try a different spelling or your state's 2-letter code.</span></div>`;
@@ -221,7 +225,7 @@
       wrap.appendChild(el);
       const input = el.querySelector("input");
       const show = () => { document.getElementById(id + "_v").textContent = m.step < 1 ? state[f.name].toFixed(2) : Math.round(state[f.name]).toLocaleString(); };
-      input.addEventListener("input", () => { state[f.name] = parseFloat(input.value); show(); compute(); });
+      input.addEventListener("input", () => { if (!flags.calc) { flags.calc = 1; T("calculator"); } state[f.name] = parseFloat(input.value); show(); compute(); });
       show();
     });
     model.categorical.forEach((c) => {
@@ -286,6 +290,7 @@
 
   function showCompare() {
     if (cmp.size < 2) return;
+    T("compare");
     const hs = [...cmp.values()];
     const rowFor = (key) => {
       const cells = hs.map((f) => {

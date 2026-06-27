@@ -12,6 +12,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/style.css"/>
 <script>document.documentElement.classList.add('fx');</script>
+<!-- Visit analytics: privacy-friendly, cookieless (GoatCounter).
+     Set GC_CODE to your GoatCounter site code to start recording visits. -->
+<script>
+  window.GC_CODE = ""; // set to your GoatCounter code (e.g. "readmissionrisk") to start recording visits
+  window.track = function (name) {
+    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "evt-" + name, event: true }); } catch (e) {}
+  };
+</script>
 </head>
 <body>
 <div id="scroll-progress" aria-hidden="true"></div>
@@ -225,8 +233,8 @@
         <div style="margin-top:4px"><a href="https://www.medicare.gov/care-compare/" target="_blank" rel="noopener">Medicare Care Compare</a> · <a href="https://data.cms.gov/provider-data/topics/hospitals" target="_blank" rel="noopener">CMS data</a></div>
       </div>
       <div>
-        Free public-interest tool.<br/>
-        No accounts, no tracking of your searches.<br/>
+        Free public-interest tool. No sign-up.<br/>
+        We use privacy-friendly, cookieless analytics to count visits. We never log your searches or sell your data.<br/>
         © <span id="yr"></span> Rajat Goel.
       </div>
     </div>
@@ -246,6 +254,15 @@
   </div>
 </div>
 
+<script>
+  (function () {
+    if (!window.GC_CODE) return;
+    var s = document.createElement("script");
+    s.async = true; s.src = "//gc.zgo.at/count.js";
+    s.setAttribute("data-goatcounter", "https://" + window.GC_CODE + ".goatcounter.com/count");
+    document.head.appendChild(s);
+  })();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <script src="js/app.js"></script>
 <script src="js/fx.js" defer></script>
