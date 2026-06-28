@@ -8,6 +8,16 @@
 <meta property="og:title" content="Is Your Hospital Safe? Compare Hospital Readmission Safety"/>
 <meta property="og:description" content="Compare 2,800+ U.S. hospitals on avoidable readmissions, by condition, using official Medicare data. Free, plain-language, no sign-up."/>
 <meta property="og:type" content="website"/>
+<!-- PWA: installable app on iPhone/iPad (Add to Home Screen) and Android -->
+<meta name="theme-color" content="#0b1f3a"/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="SafeStay"/>
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png"/>
+<link rel="apple-touch-icon" sizes="167x167" href="icons/apple-touch-icon-167.png"/>
+<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/style.css"/>
@@ -272,7 +282,33 @@
   })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<div id="ios-install" hidden>
+  <span>Install this as an app: tap <strong>Share</strong>, then <strong>Add to Home Screen</strong>.</span>
+  <button id="ios-install-x" aria-label="Dismiss">&times;</button>
+</div>
+<script>
+  (function () {
+    var ua = navigator.userAgent || "";
+    var isIOS = /iphone|ipad|ipod/i.test(ua) && !window.MSStream;
+    var standalone = ("standalone" in navigator && navigator.standalone) ||
+      (window.matchMedia && matchMedia("(display-mode: standalone)").matches);
+    try { if (!isIOS || standalone || localStorage.getItem("iosInstallDismissed")) return; } catch (e) { if (!isIOS || standalone) return; }
+    var el = document.getElementById("ios-install");
+    if (!el) return;
+    setTimeout(function () { el.hidden = false; }, 1200);
+    document.getElementById("ios-install-x").onclick = function () {
+      el.hidden = true; try { localStorage.setItem("iosInstallDismissed", "1"); } catch (e) {}
+    };
+  })();
+</script>
 <script src="js/app.js"></script>
 <script src="js/fx.js" defer></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").catch(function () {});
+    });
+  }
+</script>
 </body>
 </html>
