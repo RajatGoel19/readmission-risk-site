@@ -161,7 +161,7 @@ html.fx .reveal.in.eyebrow,html.fx .reveal.in .eyebrow{}
 .theme-toggle:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
 
 /* ===== Dark theme ===== */
-html[data-theme="dark"]{--bg:#0a1626;--card:#122238;--ink:#dbe6f2;--muted:#93a7be;--line:#22374f;--navy2:#0f2744}
+html[data-theme="dark"]{--bg:#0a1626;--card:#122238;--ink:#dbe6f2;--muted:#93a7be;--line:#22374f;--navy2:#0f2744;--teal-d:#6ee7d8}
 html[data-theme="dark"] body{background:var(--bg);color:var(--ink)}
 html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3,html[data-theme="dark"] h4{color:#eaf2fb}
 html[data-theme="dark"] .statbig{color:#eaf2fb}
@@ -199,6 +199,8 @@ html[data-theme="dark"] .rangeval{color:#5fe3d2}
 html[data-theme="dark"] .cmp-table thead th{background:#16283f;color:#eaf2fb}
 html[data-theme="dark"] .checklist li:before{background:linear-gradient(135deg,var(--teal),var(--accent))}
 html[data-theme="dark"] .tool{background:var(--card);border-color:var(--line)}
+/* Hero float-card stays a white card in both themes; keep its sub-text dark */
+html[data-theme="dark"] .fc-loc,html[data-theme="dark"] .fc-ratio{color:#5b6b7f}
 /* Expandable hospital rows */
 details.hosp{border-bottom:1px solid var(--line)}
 details.hosp:last-child{border-bottom:0}

@@ -256,7 +256,8 @@
       b.addEventListener("click", () => {
         const inp = document.getElementById("search");
         inp.value = b.dataset.st; inp.dispatchEvent(new Event("input"));
-        document.getElementById("find").scrollIntoView({ behavior: "smooth" });
+        const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+        document.getElementById("find").scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
         if (window.track) window.track("state-" + b.dataset.st);
       });
     });
