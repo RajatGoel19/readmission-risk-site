@@ -165,11 +165,13 @@
           ? (selectedCond === "ALL" ? "" : `not reported for ${condLabel.toLowerCase()}`)
           : `readmission ratio ${r.toFixed(2)}${r > 1 ? " (above 1.0)" : ""}`;
         const ai = f.risk_prob != null ? `<div class="aiscore">AI risk score ${Math.round(f.risk_prob * 100)}%</div>` : "";
+        const creds = (f.magnet ? '<span class="cred magnet" title="ANCC Magnet Recognition for nursing excellence">✦ Magnet</span>' : '')
+          + (f.pathway ? '<span class="cred pathway" title="ANCC Pathway to Excellence">Pathway</span>' : '');
         return `<details class="hosp">
           <summary>
             <div><strong>${f.name}</strong>
               <div class="hosp-meta">${f.state} · ${f.type || ""} · ${star}</div>
-              <div class="hosp-meta">${ratioTxt}</div>
+              <div class="hosp-meta">${ratioTxt}${creds ? " " + creds : ""}</div>
             </div>
             <div style="text-align:right"><span class="badge ${cls}">${lbl}</span>${ai}
               <button type="button" class="cmp-btn${cmp.has(f._id) ? " on" : ""}" data-k="${f._id}">${cmp.has(f._id) ? "✓ Comparing" : "+ Compare"}</button>

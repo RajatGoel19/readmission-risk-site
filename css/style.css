@@ -116,6 +116,9 @@ footer a{color:#bcd2ea}
 .badge.worse{background:#fdecea;color:#b42318}
 .badge.na{background:#f3f3f3;color:#888}
 .hosp-meta{font-size:.84rem;color:var(--muted);margin-top:3px}
+.cred{display:inline-block;font-size:.72rem;font-weight:800;padding:2px 9px;border-radius:999px;margin-left:5px;vertical-align:middle}
+.cred.magnet{background:linear-gradient(135deg,#b8860b,#e0a800);color:#fff}
+.cred.pathway{background:#e7eef7;color:#2c5c8a;border:1px solid #cfe0f0}
 /* Expandable hospital rows */
 details.hosp{border-bottom:1px solid var(--line)}
 details.hosp:last-child{border-bottom:0}
