@@ -119,6 +119,12 @@ footer a{color:#bcd2ea}
 .cred{display:inline-block;font-size:.72rem;font-weight:800;padding:2px 9px;border-radius:999px;margin-left:5px;vertical-align:middle}
 .cred.magnet{background:linear-gradient(135deg,#b8860b,#e0a800);color:#fff}
 .cred.pathway{background:#e7eef7;color:#2c5c8a;border:1px solid #cfe0f0}
+/* Nursing credential status shown in every result's top lines */
+.hosp-creds{display:flex;gap:6px;margin-top:5px}
+.cred-mini{font-size:.72rem;font-weight:800;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.cred-mini.magnet.yes{background:linear-gradient(135deg,#b8860b,#e0a800);color:#fff}
+.cred-mini.pathway.yes{background:#e7eef7;color:#2c5c8a;border:1px solid #cfe0f0}
+.cred-mini.no{background:#f1f2f4;color:#9aa4b0}
 /* Expandable hospital rows */
 details.hosp{border-bottom:1px solid var(--line)}
 details.hosp:last-child{border-bottom:0}

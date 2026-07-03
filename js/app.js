@@ -165,13 +165,17 @@
           ? (selectedCond === "ALL" ? "" : `not reported for ${condLabel.toLowerCase()}`)
           : `readmission ratio ${r.toFixed(2)}${r > 1 ? " (above 1.0)" : ""}`;
         const ai = f.risk_prob != null ? `<div class="aiscore">AI risk score ${Math.round(f.risk_prob * 100)}%</div>` : "";
-        const creds = (f.magnet ? '<span class="cred magnet" title="ANCC Magnet Recognition for nursing excellence">✦ Magnet</span>' : '')
-          + (f.pathway ? '<span class="cred pathway" title="ANCC Pathway to Excellence">Pathway</span>' : '');
+        // Nursing credentials shown for EVERY hospital, right in the top lines
+        const credLine = `<div class="hosp-meta hosp-creds">`
+          + `<span class="cred-mini magnet ${f.magnet ? "yes" : "no"}" title="${f.magnet ? "ANCC Magnet recognized for nursing excellence" : "Not Magnet recognized"}">${f.magnet ? "✦ Magnet" : "✗ Magnet"}</span>`
+          + `<span class="cred-mini pathway ${f.pathway ? "yes" : "no"}" title="${f.pathway ? "ANCC Pathway to Excellence" : "Not Pathway certified"}">${f.pathway ? "✓ Pathway" : "✗ Pathway"}</span>`
+          + `</div>`;
         return `<details class="hosp">
           <summary>
             <div><strong>${f.name}</strong>
               <div class="hosp-meta">${f.state} · ${f.type || ""} · ${star}</div>
-              <div class="hosp-meta">${ratioTxt}${creds ? " " + creds : ""}</div>
+              <div class="hosp-meta">${ratioTxt}</div>
+              ${credLine}
             </div>
             <div style="text-align:right"><span class="badge ${cls}">${lbl}</span>${ai}
               <button type="button" class="cmp-btn${cmp.has(f._id) ? " on" : ""}" data-k="${f._id}">${cmp.has(f._id) ? "✓ Comparing" : "+ Compare"}</button>
@@ -193,10 +197,6 @@
       return `<div class="cond-item"><span class="cond-name">${NAMES[k]}</span>
         <span class="cond-right"><span class="cond-val">${val}</span><span class="badge ${cls}">${lbl}</span></span></div>`;
     }).join("");
-    // Nursing-quality credentials: always shown, explicitly yes or no
-    const cstat = (on, label) => `<span class="cred-status ${on ? "yes" : "no"}">${on ? "✓" : "✗"} ${label}${on ? "" : ": no"}</span>`;
-    const creds = `<div class="cond-creds"><span class="cred-lbl">Nursing quality credentials:</span>
-      ${cstat(!!f.magnet, "Magnet")}${cstat(!!f.pathway, "Pathway to Excellence")}</div>`;
     let ctx = "";
     if (f.ctx && (f.ctx.income != null || f.ctx.uninsured != null)) {
       const bits = [];
@@ -205,7 +205,7 @@
       if (f.ctx.rural != null) bits.push(`${f.ctx.rural}% rural`);
       ctx = `<div class="cond-ctx">Community it serves: ${bits.join(" · ")}</div>`;
     }
-    return rows + creds + ctx;
+    return rows + ctx;
   }
 
   /* ---------- educational "what makes a hospital safer" calculator ---------- */
