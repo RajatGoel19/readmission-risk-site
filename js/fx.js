@@ -147,6 +147,23 @@
     canvas.classList.add("on");
   }
 
+  /* ---------- nav active-section highlighting ---------- */
+  function navHighlight() {
+    const links = $$(".navlinks a[href^='#']");
+    if (!links.length || !("IntersectionObserver" in window)) return;
+    const map = {};
+    links.forEach((a) => { const id = a.getAttribute("href").slice(1); const s = document.getElementById(id); if (s) map[id] = a; });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          links.forEach((a) => a.classList.remove("active"));
+          if (map[e.target.id]) map[e.target.id].classList.add("active");
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    Object.keys(map).forEach((id) => io.observe(document.getElementById(id)));
+  }
+
   function init() {
     try { progress(); } catch (e) {}
     try { reveals(); } catch (e) {}
@@ -154,6 +171,7 @@
     try { parallax(); } catch (e) {}
     try { ripples(); } catch (e) {}
     try { hero3D(); } catch (e) {}
+    try { navHighlight(); } catch (e) {}
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();

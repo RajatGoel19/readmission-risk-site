@@ -47,7 +47,7 @@
     .then(([res, model, facilities]) => {
       if (res) renderEvidence(res);
       if (model) buildCalculator(model);
-      if (facilities) { facilities.forEach((f, i) => (f._id = i)); FAC = facilities; wireLookup(); wireCompare(); fillHeroPreview(facilities); }
+      if (facilities) { facilities.forEach((f, i) => (f._id = i)); FAC = facilities; wireLookup(); wireCompare(); fillHeroPreview(facilities); buildStateViz(facilities); }
     });
 
   function titleCase(s) {
@@ -206,6 +206,61 @@
       ctx = `<div class="cond-ctx">Community it serves: ${bits.join(" · ")}</div>`;
     }
     return rows + ctx;
+  }
+
+  /* ---------- interactive national state heatmap ---------- */
+  const STATE_NAMES = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", DC: "District of Columbia", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming", PR: "Puerto Rico" };
+
+  function lerpColor(t) {
+    // 0 -> green, 0.5 -> amber, 1 -> red
+    const stops = [[21, 115, 71], [224, 168, 0], [192, 57, 43]];
+    t = Math.max(0, Math.min(1, t));
+    const seg = t < 0.5 ? 0 : 1, lt = t < 0.5 ? t / 0.5 : (t - 0.5) / 0.5;
+    const a = stops[seg], b = stops[seg + 1];
+    return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * lt)).join(",")})`;
+  }
+
+  function buildStateViz(facs) {
+    const grid = document.getElementById("state-grid");
+    if (!grid) return;
+    const by = {};
+    facs.forEach((f) => { if (f.state) (by[f.state] = by[f.state] || []).push(f); });
+    let stats = Object.entries(by).map(([st, list]) => {
+      const risks = list.map((f) => f.risk_prob).filter((x) => x != null);
+      const errs = list.map((f) => f.mean_err).filter((x) => x != null);
+      return {
+        st, n: list.length,
+        avg: risks.length ? risks.reduce((a, b) => a + b, 0) / risks.length : 0.5,
+        worseShare: errs.length ? errs.filter((e) => e >= 1).length / errs.length : 0,
+      };
+    }).filter((s) => s.n >= 3 && STATE_NAMES[s.st]);
+    const vals = stats.map((s) => s.avg);
+    const lo = Math.min(...vals), hi = Math.max(...vals);
+    stats.sort((a, b) => b.avg - a.avg);
+    const detail = document.getElementById("state-detail");
+    const show = (s) => {
+      if (detail) detail.innerHTML = `<b>${STATE_NAMES[s.st]}</b>: ${s.n} hospitals · `
+        + `<b>${Math.round(s.worseShare * 100)}%</b> readmit worse than expected · `
+        + `model risk index <b>${Math.round(s.avg * 100)}</b>. Tap to see its hospitals.`;
+    };
+    grid.innerHTML = stats.map((s) => {
+      const t = hi > lo ? (s.avg - lo) / (hi - lo) : 0.5;
+      return `<button class="state-tile" data-st="${s.st}" style="background:${lerpColor(t)}"
+        aria-label="${STATE_NAMES[s.st]}, ${Math.round(s.worseShare * 100)} percent worse than expected">
+        <span class="st-code">${s.st}</span><span class="st-val">${Math.round(s.worseShare * 100)}%</span></button>`;
+    }).join("");
+    grid.querySelectorAll(".state-tile").forEach((b) => {
+      const s = stats.find((x) => x.st === b.dataset.st);
+      b.addEventListener("mouseenter", () => show(s));
+      b.addEventListener("focus", () => show(s));
+      b.addEventListener("click", () => {
+        const inp = document.getElementById("search");
+        inp.value = b.dataset.st; inp.dispatchEvent(new Event("input"));
+        document.getElementById("find").scrollIntoView({ behavior: "smooth" });
+        if (window.track) window.track("state-" + b.dataset.st);
+      });
+    });
+    if (stats.length && detail) show(stats[Math.floor(stats.length / 2)]);
   }
 
   /* ---------- educational "what makes a hospital safer" calculator ---------- */

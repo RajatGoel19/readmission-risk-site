@@ -125,6 +125,21 @@ footer a{color:#bcd2ea}
 .cred-mini.magnet.yes{background:linear-gradient(135deg,#b8860b,#e0a800);color:#fff}
 .cred-mini.pathway.yes{background:#e7eef7;color:#2c5c8a;border:1px solid #cfe0f0}
 .cred-mini.no{background:#f1f2f4;color:#9aa4b0}
+
+/* Interactive national state heatmap */
+.section-tint{background:linear-gradient(180deg,#f4f8fc,#eaf1f8)}
+.state-detail{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 18px;font-size:.95rem;color:var(--navy);box-shadow:var(--shadow);margin-top:18px}
+.state-detail b{color:var(--teal-d)}
+.state-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px;margin-top:14px}
+.state-tile{border:0;border-radius:11px;padding:12px 6px;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:inherit;line-height:1.1;text-shadow:0 1px 2px rgba(0,0,0,.28);transition:transform .15s cubic-bezier(.2,.7,.2,1),box-shadow .15s}
+.state-tile:hover,.state-tile:focus-visible{transform:translateY(-4px) scale(1.05);box-shadow:0 10px 24px rgba(11,31,58,.22);outline:none;z-index:2}
+.st-code{font-weight:800;font-size:1rem;letter-spacing:.02em}
+.st-val{font-size:.72rem;font-weight:700;opacity:.95}
+.state-legend{display:flex;align-items:center;gap:12px;margin-top:16px;font-size:.82rem;color:var(--muted);flex-wrap:wrap}
+.state-legend .scale{flex:1;min-width:120px;max-width:240px;height:10px;border-radius:6px;background:linear-gradient(90deg,#157347,#e0a800,#c0392b)}
+/* Nav active-section highlight */
+.navlinks a.active{color:#fff}
+.navlinks a.active:after{content:"";display:block;height:2px;background:var(--accent);border-radius:2px;margin-top:2px}
 /* Expandable hospital rows */
 details.hosp{border-bottom:1px solid var(--line)}
 details.hosp:last-child{border-bottom:0}

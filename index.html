@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="css/style.css?v=mp2"/>
+<link rel="stylesheet" href="css/style.css?v=mp3"/>
 <script>document.documentElement.classList.add('fx');</script>
 <!-- Visit analytics: privacy-friendly, cookieless (GoatCounter).
      Set GC_CODE to your GoatCounter site code to start recording visits. -->
@@ -39,6 +39,7 @@
     <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
     <div class="navlinks" id="nav">
       <a href="#find">Find a hospital</a>
+      <a href="#explore">Explore</a>
       <a href="#why">Why it matters</a>
       <a href="#protect">Protect yourself</a>
       <a href="#how">How it works</a>
@@ -103,6 +104,18 @@
       </div>
       <p class="muted" style="font-size:.82rem;margin-top:12px">Ratings come from each hospital's official Medicare <em>Excess Readmission Ratio</em>, how its 30-day readmissions compare with what's expected for hospitals treating similar patients. A value above 1.0 means more readmissions than expected. This describes the <strong>hospital</strong>, not any one person.</p>
     </div>
+  </div>
+</section>
+
+<!-- EXPLORE: interactive national state heatmap -->
+<section class="section section-tint" id="explore">
+  <div class="container">
+    <div class="eyebrow">The national picture · interactive</div>
+    <h2>Explore readmission risk across the country.</h2>
+    <p class="lead">Every state, colored by the share of its hospitals that readmit more patients than expected. Hover for the numbers, tap a state to jump to its hospitals.</p>
+    <div class="state-detail" id="state-detail">Hover or tap a state to see its numbers.</div>
+    <div class="state-grid" id="state-grid"></div>
+    <div class="state-legend"><span>Fewer readmissions than expected</span><span class="scale" aria-hidden="true"></span><span>More than expected</span></div>
   </div>
 </section>
 
@@ -302,8 +315,8 @@
     };
   })();
 </script>
-<script src="js/app.js?v=mp2"></script>
-<script src="js/fx.js?v=mp2" defer></script>
+<script src="js/app.js?v=mp3"></script>
+<script src="js/fx.js?v=mp3" defer></script>
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
