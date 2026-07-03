@@ -193,6 +193,10 @@
       return `<div class="cond-item"><span class="cond-name">${NAMES[k]}</span>
         <span class="cond-right"><span class="cond-val">${val}</span><span class="badge ${cls}">${lbl}</span></span></div>`;
     }).join("");
+    // Nursing-quality credentials: always shown, explicitly yes or no
+    const cstat = (on, label) => `<span class="cred-status ${on ? "yes" : "no"}">${on ? "✓" : "✗"} ${label}${on ? "" : ": no"}</span>`;
+    const creds = `<div class="cond-creds"><span class="cred-lbl">Nursing quality credentials:</span>
+      ${cstat(!!f.magnet, "Magnet")}${cstat(!!f.pathway, "Pathway to Excellence")}</div>`;
     let ctx = "";
     if (f.ctx && (f.ctx.income != null || f.ctx.uninsured != null)) {
       const bits = [];
@@ -201,7 +205,7 @@
       if (f.ctx.rural != null) bits.push(`${f.ctx.rural}% rural`);
       ctx = `<div class="cond-ctx">Community it serves: ${bits.join(" · ")}</div>`;
     }
-    return rows + ctx;
+    return rows + creds + ctx;
   }
 
   /* ---------- educational "what makes a hospital safer" calculator ---------- */
