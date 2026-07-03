@@ -380,8 +380,16 @@
   function renderGauge(p) {
     const pct = Math.round(p * 100);
     setText("g-pct", pct + "%");
-    const needle = $("#g-needle");
-    if (needle) needle.style.left = Math.min(98, Math.max(2, pct)) + "%";
+    const arc = $("#g-arc");
+    if (arc) {
+      const L = arc.getTotalLength();
+      arc.style.strokeDasharray = L;
+      arc.style.strokeDashoffset = L * (1 - Math.max(0, Math.min(1, p)));
+      const t = Math.max(0, Math.min(1, (p - 0.35) / 0.35)); // 0.35..0.70 -> 0..1
+      const pair = t < 0.5 ? [[24, 135, 80], [224, 168, 0]] : [[224, 168, 0], [192, 57, 43]];
+      const lt = t < 0.5 ? t / 0.5 : (t - 0.5) / 0.5;
+      arc.style.stroke = `rgb(${pair[0].map((v, i) => Math.round(v + (pair[1][i] - v) * lt)).join(",")})`;
+    }
     const band = $("#g-band");
     if (band) {
       band.classList.remove("risklow", "riskmod", "riskhigh");

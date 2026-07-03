@@ -140,6 +140,65 @@ footer a{color:#bcd2ea}
 /* Nav active-section highlight */
 .navlinks a.active{color:#fff}
 .navlinks a.active:after{content:"";display:block;height:2px;background:var(--accent);border-radius:2px;margin-top:2px}
+
+/* Animated arc gauge (calculator) */
+.arc-wrap{position:relative;width:240px;max-width:100%;margin:4px auto 0}
+.arc-gauge{width:100%;height:auto;display:block;overflow:visible}
+.arc-bg{fill:none;stroke:#e6edf5;stroke-width:15;stroke-linecap:round}
+.arc-val{fill:none;stroke:var(--teal);stroke-width:15;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.2,.7,.2,1),stroke .45s}
+.arc-center{position:absolute;left:0;right:0;bottom:2px;text-align:center}
+.arc-center .pct{font-size:2.6rem;font-weight:800;color:var(--navy);line-height:1}
+.arc-center .band{margin-top:2px}
+
+/* Richer section transitions: animated heading accent */
+html.fx .section > .container > h2{position:relative}
+html.fx .section > .container > h2:before{content:"";position:absolute;left:0;top:-14px;width:0;height:4px;border-radius:3px;background:linear-gradient(90deg,var(--teal),var(--accent));transition:width .8s cubic-bezier(.2,.7,.2,1) .1s}
+html.fx .section .reveal.in > h2:before,html.fx .section > .container > h2.in:before{width:52px}
+html.fx .reveal.in.eyebrow,html.fx .reveal.in .eyebrow{}
+
+/* Theme toggle button */
+.theme-toggle{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:1.05rem;display:inline-flex;align-items:center;justify-content:center;margin-left:auto;margin-right:16px;transition:background .2s,transform .2s;flex:none}
+.theme-toggle:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
+
+/* ===== Dark theme ===== */
+html[data-theme="dark"]{--bg:#0a1626;--card:#122238;--ink:#dbe6f2;--muted:#93a7be;--line:#22374f;--navy2:#0f2744}
+html[data-theme="dark"] body{background:var(--bg);color:var(--ink)}
+html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3,html[data-theme="dark"] h4{color:#eaf2fb}
+html[data-theme="dark"] .statbig{color:#eaf2fb}
+html[data-theme="dark"] .card{background:var(--card);border-color:var(--line)}
+html[data-theme="dark"] .section{border-bottom-color:#1c2f45}
+html[data-theme="dark"] .section-tint{background:linear-gradient(180deg,#0c1a2c,#0a1626)}
+html[data-theme="dark"] th{background:#16283f;color:#eaf2fb}
+html[data-theme="dark"] tbody tr:hover{background:#16283f}
+html[data-theme="dark"] .bigsearch input,html[data-theme="dark"] .field select,html[data-theme="dark"] .field input[type=text],html[data-theme="dark"] .lookup input{background:#0e1d31;color:var(--ink);border-color:var(--line)}
+html[data-theme="dark"] .results-list,html[data-theme="dark"] details.hosp,html[data-theme="dark"] .cond-item{border-color:var(--line)}
+html[data-theme="dark"] details.hosp summary:hover{background:#16283f}
+html[data-theme="dark"] .cond-grid{background:#0e1d31}
+html[data-theme="dark"] .condbtn{background:#122238;color:var(--ink);border-color:var(--line)}
+html[data-theme="dark"] .condbtn.active{background:#2dd4bf;color:#062a2a;border-color:#2dd4bf}
+html[data-theme="dark"] .state-detail{background:var(--card);border-color:var(--line);color:#eaf2fb}
+html[data-theme="dark"] .note{background:#102636;border-left-color:var(--teal);color:#cfe0f0}
+html[data-theme="dark"] .disclaimer{background:#2a2515;border-color:#574a1f;color:#e6d6a8}
+html[data-theme="dark"] .figcard img{background:#0e1d31;border-color:var(--line)}
+html[data-theme="dark"] .modal-card{background:var(--card)}
+html[data-theme="dark"] .arc-bg{stroke:#22374f}
+html[data-theme="dark"] .arc-center .pct{color:#eaf2fb}
+html[data-theme="dark"] .badge.avg{background:#1c2f45;color:#9fb8d4}
+html[data-theme="dark"] .cred-mini.no{background:#1c2f45;color:#8ba0b8}
+html[data-theme="dark"] .icon,html[data-theme="dark"] .cta{color:#062a2a}
+html[data-theme="dark"] .eyebrow{color:var(--accent)}
+html[data-theme="dark"] .expand-hint{color:var(--accent)}
+html[data-theme="dark"] .cond-name,
+html[data-theme="dark"] .field label,
+html[data-theme="dark"] details.faq summary,
+html[data-theme="dark"] .checklist strong,
+html[data-theme="dark"] .cmp-table tbody th,
+html[data-theme="dark"] .cred-lbl,
+html[data-theme="dark"] .card h3{color:#dbe6f2}
+html[data-theme="dark"] .rangeval{color:#5fe3d2}
+html[data-theme="dark"] .cmp-table thead th{background:#16283f;color:#eaf2fb}
+html[data-theme="dark"] .checklist li:before{background:linear-gradient(135deg,var(--teal),var(--accent))}
+html[data-theme="dark"] .tool{background:var(--card);border-color:var(--line)}
 /* Expandable hospital rows */
 details.hosp{border-bottom:1px solid var(--line)}
 details.hosp:last-child{border-bottom:0}
@@ -276,10 +335,14 @@ details.hosp summary:hover .badge{transform:scale(1.04)}
   html.fx .reveal{opacity:1!important;transform:none!important;transition:none}
   .scroll-cue span:before,.float-card,.float-pill,.aurora span,.live-dot{animation:none!important}
   .float-card{transform:rotate(-2deg)}
-  .card:hover,.cta:hover,.condbtn:hover{transform:none}
+  .card:hover,.cta:hover,.condbtn:hover,.state-tile:hover,.state-tile:focus-visible,.theme-toggle:hover{transform:none}
   .ripple{display:none}
+  .arc-val{transition:none}
+  html.fx .section > .container > h2:before{transition:none}
   html{scroll-behavior:auto}
 }
+/* Focus-visible for new interactive controls */
+.theme-toggle:focus-visible,.state-tile:focus-visible,.cmp-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 @media(max-width:960px){
   .hero-grid{grid-template-columns:1fr;gap:36px}

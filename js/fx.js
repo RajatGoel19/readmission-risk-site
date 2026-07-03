@@ -164,7 +164,23 @@
     Object.keys(map).forEach((id) => io.observe(document.getElementById(id)));
   }
 
+  /* ---------- light / dark theme toggle ---------- */
+  function themeToggle() {
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    const icon = () => (document.documentElement.getAttribute("data-theme") === "dark" ? "☀️" : "🌙");
+    btn.textContent = icon();
+    btn.addEventListener("click", () => {
+      const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      btn.textContent = icon();
+      if (window.track) window.track("theme-" + next);
+    });
+  }
+
   function init() {
+    try { themeToggle(); } catch (e) {}
     try { progress(); } catch (e) {}
     try { reveals(); } catch (e) {}
     try { counts(); } catch (e) {}

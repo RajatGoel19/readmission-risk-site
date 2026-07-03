@@ -20,8 +20,9 @@
 <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="css/style.css?v=mp3"/>
-<script>document.documentElement.classList.add('fx');</script>
+<link rel="stylesheet" href="css/style.css?v=mp5"/>
+<script>document.documentElement.classList.add('fx');
+(function(){try{var t=localStorage.getItem('theme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <!-- Visit analytics: privacy-friendly, cookieless (GoatCounter).
      Set GC_CODE to your GoatCounter site code to start recording visits. -->
 <script>
@@ -36,6 +37,7 @@
 <nav>
   <div class="container">
     <div class="brand"><span class="dot"></span> SafeStay&nbsp;Hospital&nbsp;Check</div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark / light mode">🌙</button>
     <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
     <div class="navlinks" id="nav">
       <a href="#find">Find a hospital</a>
@@ -174,9 +176,13 @@
       <div class="grid cols-2" style="align-items:center">
         <div><div class="formgrid" id="calc-fields"></div></div>
         <div class="gauge">
-          <div class="pct" id="g-pct">…</div>
-          <div class="band" id="g-band">&nbsp;</div>
-          <div class="meter"><div class="needle" id="g-needle" style="left:50%"></div></div>
+          <div class="arc-wrap">
+            <svg class="arc-gauge" viewBox="0 0 200 116" aria-hidden="true">
+              <path class="arc-bg" d="M 16 100 A 84 84 0 0 1 184 100"/>
+              <path class="arc-val" id="g-arc" d="M 16 100 A 84 84 0 0 1 184 100"/>
+            </svg>
+            <div class="arc-center"><div class="pct" id="g-pct">…</div><div class="band" id="g-band">&nbsp;</div></div>
+          </div>
           <p class="muted" id="g-note" style="font-size:.86rem">Estimated chance this hospital readmits more patients than expected. An illustration of the drivers, not a score for any specific hospital or person.</p>
         </div>
       </div>
@@ -315,8 +321,8 @@
     };
   })();
 </script>
-<script src="js/app.js?v=mp3"></script>
-<script src="js/fx.js?v=mp3" defer></script>
+<script src="js/app.js?v=mp5"></script>
+<script src="js/fx.js?v=mp5" defer></script>
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
