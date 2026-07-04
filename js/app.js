@@ -205,7 +205,18 @@
       if (f.ctx.rural != null) bits.push(`${f.ctx.rural}% rural`);
       ctx = `<div class="cond-ctx">Community it serves: ${bits.join(" · ")}</div>`;
     }
-    return rows + ctx;
+    // County-level nursing credentials: how many Magnet / Pathway hospitals nearby
+    let cty = "";
+    if (f.county && f.county.name) {
+      const m = f.county.magnet || 0, p = f.county.pathway || 0;
+      if (m + p >= 1) {
+        const parts = [];
+        if (m >= 1) parts.push(`${m} Magnet`);
+        if (p >= 1) parts.push(`${p} Pathway`);
+        cty = `<div class="cond-ctx">Nursing excellence in the ${f.county.name} area: ${parts.join(" and ")} certified ${m + p === 1 ? "hospital" : "hospitals"} nearby</div>`;
+      }
+    }
+    return rows + ctx + cty;
   }
 
   /* ---------- interactive national state heatmap ---------- */

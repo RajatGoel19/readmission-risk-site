@@ -152,9 +152,9 @@ footer a{color:#bcd2ea}
 
 /* Richer section transitions: animated heading accent */
 html.fx .section > .container > h2{position:relative}
-html.fx .section > .container > h2:before{content:"";position:absolute;left:0;top:-14px;width:0;height:4px;border-radius:3px;background:linear-gradient(90deg,var(--teal),var(--accent));transition:width .8s cubic-bezier(.2,.7,.2,1) .1s}
+html.fx .section > .container > h2{padding-bottom:14px}
+html.fx .section > .container > h2:before{content:"";position:absolute;left:0;bottom:0;width:0;height:4px;border-radius:3px;background:linear-gradient(90deg,var(--teal),var(--accent));transition:width .8s cubic-bezier(.2,.7,.2,1) .1s}
 html.fx .section .reveal.in > h2:before,html.fx .section > .container > h2.in:before{width:52px}
-html.fx .reveal.in.eyebrow,html.fx .reveal.in .eyebrow{}
 
 /* Theme toggle button */
 .theme-toggle{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:1.05rem;display:inline-flex;align-items:center;justify-content:center;margin-left:auto;margin-right:16px;transition:background .2s,transform .2s;flex:none}
