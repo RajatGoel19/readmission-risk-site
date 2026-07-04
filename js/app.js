@@ -243,6 +243,8 @@
         st, n: list.length,
         avg: risks.length ? risks.reduce((a, b) => a + b, 0) / risks.length : 0.5,
         worseShare: errs.length ? errs.filter((e) => e >= 1).length / errs.length : 0,
+        magnet: list.filter((f) => f.magnet).length,
+        pathway: list.filter((f) => f.pathway).length,
       };
     }).filter((s) => s.n >= 3 && STATE_NAMES[s.st]);
     const vals = stats.map((s) => s.avg);
@@ -252,7 +254,8 @@
     const show = (s) => {
       if (detail) detail.innerHTML = `<b>${STATE_NAMES[s.st]}</b>: ${s.n} hospitals · `
         + `<b>${Math.round(s.worseShare * 100)}%</b> readmit worse than expected · `
-        + `model risk index <b>${Math.round(s.avg * 100)}</b>. Tap to see its hospitals.`;
+        + `model risk index <b>${Math.round(s.avg * 100)}</b> · `
+        + `<b>${s.magnet}</b> Magnet, <b>${s.pathway}</b> Pathway certified. Tap to see its hospitals.`;
     };
     grid.innerHTML = stats.map((s) => {
       const t = hi > lo ? (s.avg - lo) / (hi - lo) : 0.5;
