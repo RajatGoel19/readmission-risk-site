@@ -42,7 +42,10 @@
     return f.name && f.name.toLowerCase().includes(q);                 // hospital name
   }
 
-  const load = (p) => fetch(p).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  // Reuse this script's ?v= tag to cache-bust the data files too, so a deploy
+  // that changes facilities.json/results.json is picked up immediately.
+  const _V = (((document.querySelector('script[src*="app.js"]') || {}).src) || "").match(/[?&]v=([^&]+)/);
+  const load = (p) => fetch(p + (_V ? "?v=" + _V[1] : "")).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   Promise.all([load("data/results.json"), load("data/web_model.json"), load("data/facilities.json")])
     .then(([res, model, facilities]) => {
       if (res) renderEvidence(res);
@@ -208,12 +211,10 @@
     // County-level nursing credentials: how many Magnet / Pathway hospitals nearby
     let cty = "";
     if (f.county && f.county.name) {
-      const m = f.county.magnet || 0, p = f.county.pathway || 0;
-      if (m + p >= 1) {
-        const parts = [];
-        if (m >= 1) parts.push(`${m} Magnet`);
-        if (p >= 1) parts.push(`${p} Pathway`);
-        cty = `<div class="cond-ctx">Nursing excellence in the ${f.county.name} area: ${parts.join(" and ")} certified ${m + p === 1 ? "hospital" : "hospitals"} nearby</div>`;
+      const m = f.county.magnet || 0, p = f.county.pathway || 0, tot = f.county.total || 0;
+      if (m + p >= 1 && tot >= 1) {
+        const parts = [`${Math.round(m / tot * 100)}% Magnet`, `${Math.round(p / tot * 100)}% Pathway`];
+        cty = `<div class="cond-ctx">Nursing excellence in the ${f.county.name} area: ${parts.join(" · ")} certified (of ${tot} hospitals)</div>`;
       }
     }
     return rows + ctx + cty;
@@ -255,7 +256,7 @@
       if (detail) detail.innerHTML = `<b>${STATE_NAMES[s.st]}</b>: ${s.n} hospitals · `
         + `<b>${Math.round(s.worseShare * 100)}%</b> readmit worse than expected · `
         + `model risk index <b>${Math.round(s.avg * 100)}</b> · `
-        + `<b>${s.magnet}</b> Magnet, <b>${s.pathway}</b> Pathway certified. Tap to see its hospitals.`;
+        + `<b>${Math.round(s.magnet / s.n * 100)}%</b> Magnet, <b>${Math.round(s.pathway / s.n * 100)}%</b> Pathway certified. Tap to see its hospitals.`;
     };
     grid.innerHTML = stats.map((s) => {
       const t = hi > lo ? (s.avg - lo) / (hi - lo) : 0.5;
