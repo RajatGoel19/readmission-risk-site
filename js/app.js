@@ -9,13 +9,13 @@
   $("#yr").textContent = "2026";
 
   const CONDITIONS = [
-    { key: "ALL", label: "All conditions" },
-    { key: "HF", label: "Heart failure" },
-    { key: "PN", label: "Pneumonia" },
-    { key: "COPD", label: "COPD / lung" },
-    { key: "AMI", label: "Heart attack" },
-    { key: "CABG", label: "Bypass surgery" },
-    { key: "HIP_KNEE", label: "Hip / knee replacement" },
+    { key: "ALL", label: "All conditions", ico: "🏥" },
+    { key: "HF", label: "Heart failure", ico: "🫀" },
+    { key: "PN", label: "Pneumonia", ico: "🫁" },
+    { key: "COPD", label: "COPD / lung", ico: "🌬️" },
+    { key: "AMI", label: "Heart attack", ico: "💔" },
+    { key: "CABG", label: "Bypass surgery", ico: "🩺" },
+    { key: "HIP_KNEE", label: "Hip / knee replacement", ico: "🦴" },
   ];
   let selectedCond = "ALL";
   let FAC = [];
@@ -123,7 +123,7 @@
     // condition selector
     const bar = $("#condbar");
     bar.innerHTML = CONDITIONS.map((c) =>
-      `<button class="condbtn${c.key === "ALL" ? " active" : ""}" data-k="${c.key}">${c.label}</button>`
+      `<button class="condbtn${c.key === "ALL" ? " active" : ""}" data-k="${c.key}"><span class="cbi">${c.ico}</span>${c.label}</button>`
     ).join("");
     bar.querySelectorAll(".condbtn").forEach((b) =>
       b.addEventListener("click", () => {
@@ -132,14 +132,37 @@
         run();
       })
     );
-    $("#search").addEventListener("input", run);
+    const inp = $("#search");
+    const clr = $("#search-clear");
+    inp.addEventListener("input", () => { if (clr) clr.hidden = !inp.value; run(); });
+    if (clr) clr.addEventListener("click", () => { inp.value = ""; clr.hidden = true; inp.focus(); run(); });
+    // clickable example searches in the empty state
+    $("#lookup-results").addEventListener("click", (e) => {
+      const chip = e.target.closest(".qchip");
+      if (!chip) return;
+      inp.value = chip.dataset.q; if (clr) clr.hidden = false;
+      run(); inp.focus();
+    });
+    run(); // render the empty state on load
+  }
+
+  function emptyState() {
+    const chips = ["Cleveland Clinic", "Mayo Clinic", "Mount Sinai", "Cedars-Sinai", "Texas", "New York"];
+    return `<div class="empty-state">
+      <div class="empty-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </div>
+      <div class="empty-title">Search 2,800+ U.S. hospitals</div>
+      <div class="empty-sub">Type a hospital name or your state, or try one of these:</div>
+      <div class="quick-chips">${chips.map((c) => `<button type="button" class="qchip" data-q="${c}">${c}</button>`).join("")}</div>
+    </div>`;
   }
 
   function run() {
     const out = $("#lookup-results");
     const q = $("#search").value.trim().toLowerCase();
     if (q.length < 2) {
-      out.innerHTML = `<div class="row muted"><span>Start typing a hospital name or your state above…</span></div>`;
+      out.innerHTML = emptyState();
       return;
     }
     if (!flags.search) { flags.search = 1; T("search"); }
