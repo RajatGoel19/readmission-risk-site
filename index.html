@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="css/style.css?v=mp11"/>
+<link rel="stylesheet" href="css/style.css?v=mp12"/>
 <script>document.documentElement.classList.add('fx');
 (function(){try{var t=localStorage.getItem('theme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <!-- Visit analytics: privacy-friendly, cookieless (GoatCounter).
@@ -121,6 +121,30 @@
     <div class="state-detail" id="state-detail">Hover or tap a state to see its numbers.</div>
     <div class="state-grid" id="state-grid"></div>
     <div class="state-legend"><span>Fewer readmissions than expected</span><span class="scale" aria-hidden="true"></span><span>More than expected</span></div>
+
+    <div class="card ana-compare" id="nursing-excellence">
+      <h3>Nursing excellence and readmissions, nationally</h3>
+      <p class="muted">Hospitals holding an American Nurses Credentialing Center designation, <strong>Magnet Recognition</strong> or <strong>Pathway to Excellence</strong>, are less likely to exceed their expected 30-day readmissions in the 2026 CMS data.</p>
+      <div class="ana-rows">
+        <div class="ana-row">
+          <div class="ana-label">Magnet-designated <span class="ana-n">(403 hospitals)</span></div>
+          <div class="ana-bar"><span class="ana-fill good" style="--w:45.4%"><b>45.4%</b> exceed expected readmissions</span></div>
+        </div>
+        <div class="ana-row">
+          <div class="ana-label">Not Magnet-designated <span class="ana-n">(2,422)</span></div>
+          <div class="ana-bar"><span class="ana-fill" style="--w:50.8%"><b>50.8%</b></span></div>
+        </div>
+        <div class="ana-row ana-gap">
+          <div class="ana-label">Pathway-designated <span class="ana-n">(150 hospitals)</span></div>
+          <div class="ana-bar"><span class="ana-fill good" style="--w:47.3%"><b>47.3%</b> exceed expected readmissions</span></div>
+        </div>
+        <div class="ana-row">
+          <div class="ana-label">Neither designation <span class="ana-n">(2,278)</span></div>
+          <div class="ana-bar"><span class="ana-fill" style="--w:51.1%"><b>51.1%</b></span></div>
+        </div>
+      </div>
+      <p class="muted ana-note">Mean excess readmission ratio: 0.996 for Magnet hospitals vs 1.000 for others. These are descriptive associations in official CMS Care Compare data (2,833 hospitals; the Magnet difference is borderline at p&nbsp;≈&nbsp;0.05), not proof that a designation causes fewer readmissions. The association persists after adjusting for community income, rurality, and uninsured rate; hospital ownership is a stronger predictor. Designations from the public <a href="https://www.nursingworld.org/organizational-programs/magnet/find-a-magnet-organization/" target="_blank" rel="noopener">Find-a-Magnet</a> and <a href="https://www.nursingworld.org/organizational-programs/pathway/find-a-pathway-organization/" target="_blank" rel="noopener">Find-a-Pathway</a> directories.</p>
+    </div>
   </div>
 </section>
 
@@ -326,8 +350,8 @@
     };
   })();
 </script>
-<script src="js/app.js?v=mp11"></script>
-<script src="js/fx.js?v=mp11" defer></script>
+<script src="js/app.js?v=mp12"></script>
+<script src="js/fx.js?v=mp12" defer></script>
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {

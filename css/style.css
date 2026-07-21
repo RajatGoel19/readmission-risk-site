@@ -383,3 +383,21 @@ details.hosp summary:hover .badge{transform:scale(1.04)}
   .navlinks.open{display:flex}
   .nav-toggle{display:block}
 }
+
+/* ANA designation comparison (Magnet / Pathway national figures) */
+.ana-compare{margin-top:28px}
+.ana-compare h3{margin:0 0 8px}
+.ana-rows{margin:18px 0 6px;display:flex;flex-direction:column;gap:10px}
+.ana-row.ana-gap{margin-top:14px}
+.ana-label{font-size:.86rem;font-weight:600;margin-bottom:4px}
+.ana-n{color:var(--muted);font-weight:400}
+.ana-bar{background:rgba(11,60,93,.08);border-radius:999px;overflow:hidden;height:30px}
+.ana-fill{display:flex;align-items:center;height:100%;width:var(--w);min-width:64px;padding:0 12px;border-radius:999px;background:#52677c;color:#fff;font-size:.78rem;white-space:nowrap;gap:5px}
+.ana-fill.good{background:var(--teal-d,#0d7a6f)}
+html.fx .ana-fill{transition:width .8s ease}
+.ana-note{font-size:.8rem;margin-top:14px}
+html[data-theme="dark"] .ana-bar{background:rgba(255,255,255,.08)}
+html[data-theme="dark"] .ana-fill{background:#41586f}
+html[data-theme="dark"] .ana-fill.good{background:#0c6e63;color:#eafffb}
+@media (prefers-reduced-motion:reduce){html.fx .ana-fill{transition:none}}
+@media (max-width:560px){.ana-fill{font-size:.7rem;padding:0 8px}}
