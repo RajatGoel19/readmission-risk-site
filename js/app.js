@@ -271,9 +271,11 @@
         pathway: list.filter((f) => f.pathway).length,
       };
     }).filter((s) => s.n >= 3 && STATE_NAMES[s.st]);
-    const vals = stats.map((s) => s.avg);
+    // Order and colour by the SAME quantity the tile prints, otherwise the grid
+    // reads as unsorted: a state labelled 82% would sit behind one labelled 68%.
+    const vals = stats.map((s) => s.worseShare);
     const lo = Math.min(...vals), hi = Math.max(...vals);
-    stats.sort((a, b) => b.avg - a.avg);
+    stats.sort((a, b) => b.worseShare - a.worseShare);
     const detail = document.getElementById("state-detail");
     const show = (s) => {
       if (detail) detail.innerHTML = `<b>${STATE_NAMES[s.st]}</b>: ${s.n} hospitals · `
@@ -282,7 +284,7 @@
         + `<b>${Math.round(s.magnet / s.n * 100)}%</b> Magnet, <b>${Math.round(s.pathway / s.n * 100)}%</b> Pathway certified. Tap to see its hospitals.`;
     };
     grid.innerHTML = stats.map((s) => {
-      const t = hi > lo ? (s.avg - lo) / (hi - lo) : 0.5;
+      const t = hi > lo ? (s.worseShare - lo) / (hi - lo) : 0.5;
       return `<button class="state-tile" data-st="${s.st}" style="background:${lerpColor(t)}"
         aria-label="${STATE_NAMES[s.st]}, ${Math.round(s.worseShare * 100)} percent worse than expected">
         <span class="st-code">${s.st}</span><span class="st-val">${Math.round(s.worseShare * 100)}%</span></button>`;
