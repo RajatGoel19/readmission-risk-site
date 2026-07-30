@@ -237,7 +237,7 @@
       const m = f.county.magnet || 0, p = f.county.pathway || 0, tot = f.county.total || 0;
       if (m + p >= 1 && tot >= 1) {
         const parts = [`${Math.round(m / tot * 100)}% Magnet`, `${Math.round(p / tot * 100)}% Pathway`];
-        cty = `<div class="cond-ctx">Nursing excellence in the ${f.county.name} area: ${parts.join(" · ")} certified (of ${tot} hospitals)</div>`;
+        cty = `<div class="cond-ctx">Nursing excellence in the ${f.county.name} area: ${parts.join(" · ")} certified (of ${tot} hospital${tot === 1 ? "" : "s"})</div>`;
       }
     }
     return rows + ctx + cty;
