@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="css/style.css?v=mp15"/>
+<link rel="stylesheet" href="css/style.css?v=mp16"/>
 <script>document.documentElement.classList.add('fx');
 (function(){try{var t=localStorage.getItem('theme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <!-- Visit analytics: privacy-friendly, cookieless (GoatCounter).
@@ -226,7 +226,7 @@
     <p class="lead">This isn't a guess. The hospital comparisons use official Medicare quality data, and the underlying research model was tested with the same rigor expected of medical research.</p>
     <div class="grid cols-3" style="margin-top:30px">
       <div class="card"><div class="statbig" id="r-auc">…</div><p class="muted">Accuracy (ROC-AUC) of the research model at telling higher-risk from lower-risk hospitals, cross-validated <span id="r-ci"></span>. 0.5 is a coin flip; 1.0 is perfect.</p></div>
-      <div class="card"><div class="statbig" id="r-n">2,833</div><p class="muted">U.S. hospitals analyzed, using five official CMS Care Compare datasets from the latest (2026) refresh.</p></div>
+      <div class="card"><div class="statbig" id="r-n">2,833</div><p class="muted">U.S. hospitals analyzed, using six official CMS Care Compare datasets from the latest (2026) refresh, plus county-level community data and the public ANCC designation directories.</p></div>
       <div class="card"><div class="statbig" id="r-star">…</div><p class="muted">Accuracy using the CMS star rating alone. The full model adds more CMS quality signals (mortality, infections, patient experience) that are correlated with, but not derived from, readmissions.</p></div>
     </div>
     <div class="grid cols-3" style="margin-top:26px">
@@ -351,8 +351,8 @@
     };
   })();
 </script>
-<script src="js/app.js?v=mp15"></script>
-<script src="js/fx.js?v=mp15" defer></script>
+<script src="js/app.js?v=mp16"></script>
+<script src="js/fx.js?v=mp16" defer></script>
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
