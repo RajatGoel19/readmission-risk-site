@@ -110,8 +110,14 @@
   /* ---------- hospital lookup (the patient centerpiece) ---------- */
   function ratingBand(ratio) {
     if (ratio == null || isNaN(ratio)) return ["na", "Not reported"];
-    if (ratio < 0.97) return ["better", "Better than expected"];
-    if (ratio > 1.03) return ["worse", "Worse than expected"];
+    // Band the value AS DISPLAYED (2dp), not the raw one. The cutoffs sit at two
+    // decimals, so deciding on the raw value let two hospitals both showing 1.03
+    // carry opposite verdicts. Use the SAME toFixed(2) the cards print with, not
+    // Math.round, or binary floating point reintroduces the mismatch on edge
+    // values. Errs toward "About average" at the boundary.
+    const r = Number(ratio.toFixed(2));
+    if (r < 0.97) return ["better", "Better than expected"];
+    if (r > 1.03) return ["worse", "Worse than expected"];
     return ["avg", "About average"];
   }
   function ratioFor(f, cond) {
