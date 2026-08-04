@@ -149,59 +149,59 @@
   "has_ebm": true,
   "robust_cv": {
     "best_model": "LogisticRegression",
-    "roc_auc_mean": 0.773,
+    "roc_auc_mean": 0.7726,
     "ci95": [
-      0.764,
-      0.7819
+      0.7636,
+      0.7816
     ],
     "table": [
       {
         "Model": "LogisticRegression",
-        "ROC_AUC_Mean": 0.773,
-        "CI95_low": 0.764,
-        "CI95_high": 0.7819,
+        "ROC_AUC_Mean": 0.7726,
+        "CI95_low": 0.7636,
+        "CI95_high": 0.7816,
         "SD": 0.0177,
-        "overfit_gap": 0.0292
+        "overfit_gap": 0.0303
       },
       {
         "Model": "Ensemble(LR+HGB+EBM)",
-        "ROC_AUC_Mean": 0.7723,
-        "CI95_low": 0.7629,
-        "CI95_high": 0.7816,
+        "ROC_AUC_Mean": 0.7721,
+        "CI95_low": 0.7627,
+        "CI95_high": 0.7815,
         "SD": 0.0185,
-        "overfit_gap": 0.0641
+        "overfit_gap": 0.0661
       },
       {
         "Model": "XGBoost",
-        "ROC_AUC_Mean": 0.7589,
-        "CI95_low": 0.7489,
-        "CI95_high": 0.769,
+        "ROC_AUC_Mean": 0.7591,
+        "CI95_low": 0.7491,
+        "CI95_high": 0.7691,
         "SD": 0.0198,
-        "overfit_gap": 0.1044
+        "overfit_gap": 0.1055
       },
       {
         "Model": "EBM",
-        "ROC_AUC_Mean": 0.758,
-        "CI95_low": 0.7482,
+        "ROC_AUC_Mean": 0.7575,
+        "CI95_low": 0.7472,
         "CI95_high": 0.7678,
-        "SD": 0.0194,
-        "overfit_gap": 0.0844
+        "SD": 0.0203,
+        "overfit_gap": 0.0832
       },
       {
         "Model": "HistGradBoost",
-        "ROC_AUC_Mean": 0.7531,
-        "CI95_low": 0.7414,
-        "CI95_high": 0.7647,
-        "SD": 0.023,
-        "overfit_gap": 0.0819
+        "ROC_AUC_Mean": 0.7526,
+        "CI95_low": 0.7408,
+        "CI95_high": 0.7644,
+        "SD": 0.0233,
+        "overfit_gap": 0.0889
       },
       {
         "Model": "RandomForest",
-        "ROC_AUC_Mean": 0.7267,
-        "CI95_low": 0.7164,
-        "CI95_high": 0.7369,
-        "SD": 0.0203,
-        "overfit_gap": 0.089
+        "ROC_AUC_Mean": 0.727,
+        "CI95_low": 0.7169,
+        "CI95_high": 0.737,
+        "SD": 0.0198,
+        "overfit_gap": 0.0886
       }
     ],
     "calibrated_lr_auc": 0.7718
