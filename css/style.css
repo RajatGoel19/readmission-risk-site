@@ -403,3 +403,4 @@ html[data-theme="dark"] .ana-fill.good{background:#0c6e63;color:#eafffb}
 @media (max-width:560px){.ana-fill{font-size:.7rem;padding:0 8px}}
 .ana-hl{margin:16px 0 0;padding:14px 16px;border-radius:10px;background:rgba(15,127,144,.09);font-size:.92rem;line-height:1.55}
 html[data-theme="dark"] .ana-hl{background:rgba(110,231,216,.10)}
+.tm-notice{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.14);font-size:.78rem;line-height:1.55;opacity:.9}
