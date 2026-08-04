@@ -237,15 +237,10 @@
       if (f.ctx.rural != null) bits.push(`${f.ctx.rural}% rural`);
       ctx = `<div class="cond-ctx">Community it serves: ${bits.join(" · ")}</div>`;
     }
-    // County-level nursing credentials: how many Magnet / Pathway hospitals nearby
-    let cty = "";
-    if (f.county && f.county.name) {
-      const m = f.county.magnet || 0, p = f.county.pathway || 0, tot = f.county.total || 0;
-      if (m + p >= 1 && tot >= 1) {
-        const parts = [`${Math.round(m / tot * 100)}% Magnet`, `${Math.round(p / tot * 100)}% Pathway`];
-        cty = `<div class="cond-ctx">Nursing excellence in the ${f.county.name} area: ${parts.join(" · ")} certified (of ${tot} hospital${tot === 1 ? "" : "s"})</div>`;
-      }
-    }
+    // County-level designation aggregates were removed at ANCC's request
+    // (the public directory we match against is known to be incomplete,
+    // so we do not publish shares derived from it).
+    const cty = "";
     return rows + ctx + cty;
   }
 
@@ -287,7 +282,7 @@
       if (detail) detail.innerHTML = `<b>${STATE_NAMES[s.st]}</b>: ${s.n} hospitals · `
         + `<b>${Math.round(s.worseShare * 100)}%</b> readmit worse than expected · `
         + `model risk index <b>${Math.round(s.avg * 100)}</b> · `
-        + `<b>${Math.round(s.magnet / s.n * 100)}%</b> Magnet, <b>${Math.round(s.pathway / s.n * 100)}%</b> Pathway certified. Tap to see its hospitals.`;
+        + `Tap to see its hospitals.`;
     };
     grid.innerHTML = stats.map((s) => {
       const t = hi > lo ? (s.worseShare - lo) / (hi - lo) : 0.5;
